@@ -76,6 +76,8 @@ sub new {
 
   bless $self, $type;
 
+  return $self;
+
 
 }
 

@@ -157,7 +157,6 @@ xine_open_video_driver(self,id=NULL,visual=XINE_VISUAL_TYPE_NONE,data=NULL)
 	const char *id
 	int visual
 	void *data
-	CODE:
 		
 
 ##

@@ -33,7 +33,8 @@ TEST2: {
   my $stream = $xine->stream_new();
   $stream->open("$Bin/drunk_as_an_owl.ogg")
     or die "Couldn't open '$Bin/drunk_as_an_owl.ogg'";
-  $stream->play();
+  $stream->play()
+	or die "Couldn't play '$Bin/drunk_as_an_owl.ogg'";
   while ($stream->get_status() == XINE_STATUS_PLAY) {
     sleep 1;
   }
