@@ -1,0 +1,8 @@
+Changes
+Makefile.PL
+MANIFEST
+ppport.h
+README
+Xine.xs
+t/Video-Xine.t
+lib/Video/Xine.pm

@@ -1,0 +1,6 @@
+TYPEMAP
+xine_t *		T_PTRREF
+xine_stream_t *		T_PTRREF
+xine_audio_port_t *	T_PTRREF
+xine_video_port_t *	T_PTRREF
+x11_visual_t *		T_PTRREF
