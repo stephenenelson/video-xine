@@ -5,12 +5,13 @@
 
 use strict;
 use FindBin '$Bin';
-use Test::More tests => 9;
+use Test::More tests => 10;
 BEGIN { use_ok('Video::Xine') };
 
 #########################
 
 my $xine = Video::Xine->new(config_file => '/home/steven/.xine/config');
+ok(1);
 
 TEST1: {
   my $stream  = $xine->stream_new();

@@ -171,7 +171,7 @@ sub new {
   $self->{'xine'} = $xine;
   if (scalar @_ > 1) {
     $self->{'driver'} = xine_open_video_driver($self->{'xine'}{'xine'},
-					       $id,
+					       "auto",
 					       $visual,
 					       $data
 					      )

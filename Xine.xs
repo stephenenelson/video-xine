@@ -6,6 +6,49 @@
 
 #include <xine.h>
 
+typedef void Display;
+typedef unsigned long Window;
+
+typedef struct {
+  int width;
+  int height;
+  double aspect;
+} user_data_t;
+
+static void unscaled_dest_size_cb (void *user_data,
+			int video_width, 
+			int video_height,
+			double video_pixel_aspect,
+			int *dest_width, int *dest_height,
+			double *dest_pixel_aspect) 
+{
+	user_data_t* ud = (user_data_t *) user_data;
+	*dest_width = ud->width;
+	*dest_height = ud->height;
+	*dest_pixel_aspect = ud->aspect;
+
+}
+
+static void unscaled_frame_output_cb (void *user_data,
+			   int video_width, int video_height,
+			   double video_pixel_aspect,
+			   int *dest_x, int *dest_y,
+			   int *dest_width, int *dest_height,
+			   double *dest_pixel_aspect,
+			   int *win_x, int *win_y) {
+	*dest_x = 0;
+	*dest_y = 0;
+	*win_x = 0;
+	*win_y = 0;
+	user_data_t* ud = (user_data_t *) user_data;
+	*dest_width = ud->width;
+	*dest_height = ud->height;
+	*dest_pixel_aspect = ud->aspect;
+	
+}
+
+
+
 MODULE = Video::Xine		PACKAGE = Video::Xine
 
 
@@ -32,6 +75,8 @@ xine_new()
 void
 xine_init(self)
 	xine_t *self
+    INIT:
+	xine_engine_set_param(self, XINE_ENGINE_PARAM_VERBOSITY, 1);
 
 #
 # Shut down and clean up xine.
@@ -156,8 +201,8 @@ xine_open_video_driver(self,id=NULL,visual=XINE_VISUAL_TYPE_NONE,data=NULL)
 	xine_t *self
 	const char *id
 	int visual
-	void *data
-		
+	x11_visual_t *data
+
 
 ##
 ## Close a video driver
@@ -168,21 +213,42 @@ xine_close_video_driver(xine,driver)
 	xine_video_port_t *driver
 
 
-MODULE = Video::Xine        PACKAGE = Video::Xine::Driver::Video::X11Visual
+MODULE = Video::Xine        PACKAGE = Video::Xine::Util
 
+##
+## Create an X11 visual
+##
 x11_visual_t *
-xine_x11_visual_new(display,screen,window,user_data=NULL)
-	void *display
+make_x11_visual(display,screen,window,width,height,aspect)
+	Display *display
 	int screen
-	unsigned long window
-	void *user_data
+	Window window
+	int width
+	int height
+	double aspect
+	INIT:
+		user_data_t * userdata;
 	CODE:
-		RETVAL = (x11_visual_t*) safemalloc( sizeof( x11_visual_t ) );
+		userdata = (user_data_t*) safemalloc( sizeof(user_data_t) );
+		userdata->width = width;
+		userdata->height = height;
+		userdata->aspect = aspect;
+		RETVAL = (x11_visual_t*) safemalloc( sizeof(x11_visual_t) );
+		RETVAL->user_data = (void*) userdata;
 		RETVAL->display = display;
 		RETVAL->screen = screen;
 		RETVAL->d = window;
-		RETVAL->user_data = user_data;
-		RETVAL->frame_output_cb = NULL;
-		RETVAL->dest_size_cb = NULL;
+		RETVAL->frame_output_cb = unscaled_frame_output_cb;
+		RETVAL->dest_size_cb = unscaled_dest_size_cb;
 	OUTPUT:
 		RETVAL
+
+##
+## Get the display from the struct
+##
+Display *
+get_display(visual)
+	x11_visual_t *visual
+	CODE:
+		RETVAL = visual->display;
+
