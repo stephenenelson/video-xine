@@ -1,6 +1,6 @@
 package Video::Xine;
 
-use 5.008005;
+use 5.008003;
 use strict;
 use warnings;
 
