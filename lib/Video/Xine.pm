@@ -9,7 +9,23 @@ use Carp;
 
 our $VERSION = '0.01';
 our @ISA = qw(Exporter);
-our @EXPORT = qw(XINE_STATUS_STOP XINE_STATUS_PLAY);
+our @EXPORT = qw(
+  XINE_STATUS_STOP
+  XINE_STATUS_PLAY
+
+  XINE_EVENT_UI_PLAYBACK_FINISHED
+  XINE_EVENT_UI_CHANNELS_CHANGED
+  XINE_EVENT_UI_SET_TITLE
+  XINE_EVENT_UI_MESSAGE
+  XINE_EVENT_FRAME_FORMAT_CHANGE
+  XINE_EVENT_AUDIO_LEVEL
+  XINE_EVENT_QUIT
+  XINE_EVENT_PROGRESS
+  XINE_EVENT_MRL_REFERENCE
+  XINE_EVENT_UI_NUM_BUTTONS
+  XINE_EVENT_SPU_BUTTON
+  XINE_EVENT_DROPPED_FRAMES
+);
 
 require XSLoader;
 XSLoader::load('Video::Xine', $VERSION);
@@ -18,6 +34,19 @@ XSLoader::load('Video::Xine', $VERSION);
 
 use constant XINE_STATUS_STOP => 1;
 use constant XINE_STATUS_PLAY => 2;
+
+use constant XINE_EVENT_UI_PLAYBACK_FINISHED => 1;
+use constant XINE_EVENT_UI_CHANNELS_CHANGED => 2;
+use constant XINE_EVENT_UI_SET_TITLE => 3;
+use constant XINE_EVENT_UI_MESSAGE => 4;
+use constant XINE_EVENT_FRAME_FORMAT_CHANGE => 5;
+use constant XINE_EVENT_AUDIO_LEVEL => 6;
+use constant XINE_EVENT_QUIT => 7;
+use constant XINE_EVENT_PROGRESS => 8;
+use constant XINE_EVENT_MRL_REFERENCE => 9;
+use constant XINE_EVENT_UI_NUM_BUTTONS => 10;
+use constant XINE_EVENT_SPU_BUTTON => 11;
+use constant XINE_EVENT_DROPPED_FRAMES => 12;
 
 sub new {
   my $type = shift;
@@ -38,6 +67,14 @@ sub new {
   xine_init($self->{'xine'});
 
   bless $self, $type;
+}
+
+sub set_param {
+  my $self = shift;
+  my ($param, $value) = @_;
+
+  xine_engine_set_param($self->{'xine'}, $param, $value);
+  
 }
 
 
@@ -163,9 +200,14 @@ sub DESTROY {
 
 package Video::Xine::Driver::Video;
 
+use Carp;
+
 sub new {
   my $type = shift;
   my ($xine, $id, $visual, $data) = @_;
+
+  UNIVERSAL::isa($xine, 'Video::Xine')
+      or croak "First argument must be of type Video::Xine (was $xine)";
 
   my $self = {};
   $self->{'xine'} = $xine;
@@ -190,9 +232,34 @@ sub DESTROY {
   xine_close_video_driver($self->{'xine'}{'xine'}, $self->{'driver'});
 }
 
+package Video::Xine::Event;
 
+sub get_type {
+  xine_event_get_type($_[0]);
+}
 
+sub DESTROY {
+  xine_event_free($_[0]);
+}
 
+package Video::Xine::Event::Queue;
+
+sub new {
+  my $type = shift;
+  my ($stream) = @_;
+
+  my $self = {};
+  $self->{'stream'} = $stream;
+  $self->{'queue'} = xine_event_new_queue($stream->{'stream'});
+  bless $self, $type;
+}
+
+sub get_event {
+  my $self = shift;
+  my $event = xine_event_get($self->{'queue'})
+    or return;
+  bless $event, 'Video::Xine::Event';
+}
 
 1;
 __END__
@@ -233,9 +300,6 @@ Video::Xine - Perl interface to libxine
 
 A perl interface to Xine, the Linux movie player. More properly, an
 interface to libxine, the development library.
-
-Currently missing is a useful mechanism for specifying different
-windowing libraries.
 
 =head2 EXPORT
 
