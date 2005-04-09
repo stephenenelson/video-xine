@@ -1,0 +1,29 @@
+3/28/2005
+
+Uninstalled the Xine rpms and did a "make install-debug" to track down
+why the open video driver call is returning undef. (Probably it can't
+find the appropriate driver.) That served to start the segfault
+behavior on xine_new. The segfault happens in "do_lookup_x" in the
+kernel, probably in the ld library.
+
+I hope that going back to the RPMs make the error go away, but it's an
+opportunity to study why the segfault is happening. My guess is that
+it's a library mismatch. Rollo fix.
+
+3/30/2005
+
+Looks like doing a complete clean and rebuild solves the segfault
+issue. One of those things which I thought I'd done before, but can't
+actually remember doing. Or, at least, it solves the segfault in
+do_lookup_x.
+
+Then figured out that I was passing an invalid Display pointer,
+because the Video::Xine typemap is different from the Tk typemap. In
+the process I changed from Newz to safemalloc.
+
+Finally, I realized I needed to pass the ScreenNumber, not the Screen,
+which is a pointer.
+
+Currently I have an X error (much nicer than a segfault) claiming that
+I'm passing an invalid Pixmap or Window parameter. Well, why should
+the Window be left out?
