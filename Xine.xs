@@ -75,8 +75,6 @@ xine_new()
 void
 xine_init(self)
 	xine_t *self
-    INIT:
-	xine_engine_set_param(self, XINE_ENGINE_PARAM_VERBOSITY, 1);
 
 #
 # Shut down and clean up xine.
@@ -84,6 +82,15 @@ xine_init(self)
 void
 xine_exit(self)
 	xine_t *self
+
+#
+# Set a parameter on the Xine engine.
+#
+void
+xine_engine_set_param(self,param,value)
+	xine_t *self
+	int param
+	int value
 
 
 #
@@ -252,3 +259,42 @@ get_display(visual)
 	CODE:
 		RETVAL = visual->display;
 
+
+MODULE = Video::Xine	PACKAGE = Video::Xine::Event
+
+int
+xine_event_get_type(event)
+	xine_event_t *event
+	CODE:
+		RETVAL = event->type;
+	OUTPUT:
+		RETVAL
+
+void
+xine_event_free(event)
+	xine_event_t *event
+
+
+MODULE = Video::Xine	PACKAGE = Video::Xine::Event::Queue
+
+xine_event_queue_t *
+xine_event_new_queue(stream)
+	xine_stream_t *stream
+	POSTCALL:
+		if (RETVAL == NULL) {
+			XSRETURN_UNDEF;
+		}
+	
+xine_event_t *
+xine_event_get(queue)
+	xine_event_queue_t *queue
+	POSTCALL:
+		if (! RETVAL) {
+			XSRETURN_UNDEF;
+		}
+
+
+void
+xine_event_dispose_queue(queue)
+	xine_event_queue_t *queue
+	
