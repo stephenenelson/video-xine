@@ -6,3 +6,4 @@ README
 Xine.xs
 t/Video-Xine.t
 lib/Video/Xine.pm
+META.yml                                 Module meta-data (added by MakeMaker)
