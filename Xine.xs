@@ -44,8 +44,12 @@ static void unscaled_frame_output_cb (void *user_data,
 	*dest_width = ud->width;
 	*dest_height = ud->height;
 	*dest_pixel_aspect = ud->aspect;
+
+	
 	
 }
+
+
 
 
 
@@ -174,6 +178,7 @@ int
 xine_get_status(self)
 	xine_stream_t *self
 
+
 # Destroy all monsters
 void
 xine_dispose(self)
@@ -218,6 +223,15 @@ void
 xine_close_video_driver(xine,driver)
 	xine_t *xine
 	xine_video_port_t *driver
+
+##
+## Send a GUI event to the video port
+##
+int
+xine_port_send_gui_data (vo,type,data)
+	xine_video_port_t *vo
+	int type
+	void *data
 
 
 MODULE = Video::Xine        PACKAGE = Video::Xine::Util
