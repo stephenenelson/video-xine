@@ -25,6 +25,10 @@ our @EXPORT = qw(
   XINE_EVENT_UI_NUM_BUTTONS
   XINE_EVENT_SPU_BUTTON
   XINE_EVENT_DROPPED_FRAMES
+
+  XINE_GUI_SEND_DRAWABLE_CHANGED
+  XINE_GUI_SEND_EXPOSE_EVENT
+  XINE_GUI_SEND_VIDEOWIN_VISIBLE
 );
 
 require XSLoader;
@@ -47,6 +51,10 @@ use constant XINE_EVENT_MRL_REFERENCE => 9;
 use constant XINE_EVENT_UI_NUM_BUTTONS => 10;
 use constant XINE_EVENT_SPU_BUTTON => 11;
 use constant XINE_EVENT_DROPPED_FRAMES => 12;
+
+use constant XINE_GUI_SEND_DRAWABLE_CHANGED => 2;
+use constant XINE_GUI_SEND_EXPOSE_EVENT => 3;
+use constant XINE_GUI_SEND_VIDEOWIN_VISIBLE => 5;
 
 sub new {
   my $type = shift;
@@ -116,6 +124,10 @@ sub new {
   return $self;
 
 
+}
+
+sub get_video_port {
+  $_[0]->{'video_port'};
 }
 
 sub open {
@@ -225,6 +237,13 @@ sub new {
       or return;
   }
   bless $self, $type;
+}
+
+sub send_gui_data {
+  my $self = shift;
+  my ($type, $data) = @_;
+
+  xine_port_send_gui_data($self->{'driver'}, $type, $data);
 }
 
 sub DESTROY {
