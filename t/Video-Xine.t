@@ -12,6 +12,7 @@ BEGIN { use_ok('Video::Xine') };
 
 
 my $xine = Video::Xine->new(config_file => "$Bin/test_config");
+$xine->set_param(1,1);
 ok(1);
 
 TEST1: {
