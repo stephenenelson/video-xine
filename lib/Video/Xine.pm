@@ -10,6 +10,7 @@ use Carp;
 our $VERSION = '0.01';
 our @ISA = qw(Exporter);
 our @EXPORT = qw(
+  XINE_STATUS_IDLE
   XINE_STATUS_STOP
   XINE_STATUS_PLAY
 
@@ -36,6 +37,7 @@ XSLoader::load('Video::Xine', $VERSION);
 
 # Preloaded methods go here.
 
+use constant XINE_STATUS_IDLE => 0;
 use constant XINE_STATUS_STOP => 1;
 use constant XINE_STATUS_PLAY => 2;
 
@@ -291,14 +293,18 @@ Video::Xine - Perl interface to libxine
 
   use Video::Xine;
 
-  # Create and initialize the Xine driver
-  my $xine = $xine->new(
+  # Create and initialize the Xine object
+  my $xine = Video::Xine->new(
     config_file => "$ENV{'HOME'}/.xine/config",
-    video_driver => Video::Xine->VIDEO_DRIVER_NULL()
   );
 
-  # Play a particular AVI until it's over
-  my $stream = $xine->stream_new();
+  # Load a video driver
+  my $video_driver = Video::Xine::Driver::Video->new($xine,"auto",1,$x11_visual);
+
+  # Create a new stream (put your video driver under $DRIVER)
+  my $stream = $xine->stream_new(undef,$DRIVER);
+
+  # Open a file on the stream
   $stream->open('file://my/movie/file.avi')
     or die "Couldn't open stream: ", $stream->get_error();
 
@@ -306,10 +312,11 @@ Video::Xine - Perl interface to libxine
   # of stream in milliseconds
   my ($pos, $pos_time, $length_time) = $stream->get_pos_length();
 
-
+  # Start the stream playing
   $stream->play()
      or die "Couldn't play stream: ", $xine->get_error();
 
+  # Play the stream to the end
   while ( $xine->get_status() == XINE_STATUS_PLAY ) {
     sleep(1);
   }
@@ -318,24 +325,41 @@ Video::Xine - Perl interface to libxine
 =head1 DESCRIPTION
 
 A perl interface to Xine, the Linux movie player. More properly, an
-interface to libxine, the development library.
+interface to libxine, the development library. Requires installation of
+libxine.
+
+Xine by itself does not provide a user interface, and neither does
+this interface. Instead, you must set up the window using your own
+windowing code, and pass the window information to Xine.
+
 
 =head2 EXPORT
 
-None by default.
+=head3 STATUS CONSTANTS
+
+The Status constants are the results for a get_status() call. See
+xine.h for details.
+
+=over 4
+
+=item *
+
+XINE_STATUS_STOP
+
+Indicates that the stream is stopped.
+
+=item *
+
+XINE_STATUS_PLAY
+
+Indicates that the stream is playing.
+
 
 
 
 =head1 SEE ALSO
 
-Mention other useful documentation such as the documentation of
-related modules or operating system documentation (such as man pages
-in UNIX), or any relevant external documentation such as RFCs or
-standards.
-
-If you have a mailing list set up for your module, mention it here.
-
-If you have a web site set up for your module, mention it here.
+L<xine(1)>
 
 =head1 AUTHOR
 

@@ -2,15 +2,18 @@ use strict;
 
 use FindBin '$Bin';
 use Test::More tests => 1;
-
-use X11::FullScreen;
 use Video::Xine;
 
 
-my $xine = Video::Xine->new(config_file => '/home/steven/.xine/config');
+our $DEBUG = 0;
 
 
-TEST1: {
+
+SKIP: {
+  eval { require X11::FullScreen; };
+  skip 'X11::FullScreen required', 1 if $@;
+  
+  my $xine = Video::Xine->new(config_file => "$Bin/test_config");
   my $display = X11::FullScreen::Display->new();
   my $window = $display->createWindow();
   $display->sync();
@@ -33,7 +36,8 @@ TEST1: {
 
   PLAY: for (;;) {
     while ( my $event = $queue->get_event() ) {
-      print "Event: ", $event->get_type(), "\n";
+      print "Event: ", $event->get_type(), "\n"
+	if $DEBUG;
       $event->get_type() == 1 and last PLAY;
     }
     sleep(1);

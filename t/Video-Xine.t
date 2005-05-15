@@ -10,12 +10,13 @@ BEGIN { use_ok('Video::Xine') };
 
 #########################
 
-my $xine = Video::Xine->new(config_file => '/home/steven/.xine/config');
+
+my $xine = Video::Xine->new(config_file => "$Bin/test_config");
 ok(1);
 
 TEST1: {
   my $stream  = $xine->stream_new();
-  is($stream->get_status(), XINE_STATUS_STOP);
+  is($stream->get_status(), XINE_STATUS_IDLE);
   $stream->open("$Bin/time_015.avi")
     or die "Couldn't open '$Bin/time_015.avi'";
   my ($pos_pct, $pos_time, $length_time) = $stream->get_pos_length();
@@ -27,7 +28,7 @@ TEST1: {
   $stream->stop();
   is($stream->get_status(), XINE_STATUS_STOP);
   $stream->close();
-  is($stream->get_status(), XINE_STATUS_STOP);
+  is($stream->get_status(), XINE_STATUS_IDLE);
 }
 
 TEST2: {

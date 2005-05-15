@@ -3,14 +3,18 @@ use strict;
 use FindBin '$Bin';
 use Test::More tests => 1;
 
-use X11::FullScreen;
 use Video::Xine;
+
 
 
 my $xine = Video::Xine->new(config_file => '/home/steven/.xine/config');
 
 
-TEST1: {
+SKIP: {
+  eval { require X11::FullScreen; };
+
+  skip("X11::FullScreen module required for X11 tests", 1) if $@;
+
   my $display = X11::FullScreen::Display->new();
   my $window = $display->createWindow();
   $display->sync();
