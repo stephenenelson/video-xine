@@ -7,7 +7,7 @@ use warnings;
 use Exporter;
 use Carp;
 
-our $VERSION = '0.01';
+our $VERSION = '0.03';
 our @ISA = qw(Exporter);
 our @EXPORT = qw(
   XINE_STATUS_IDLE
@@ -455,14 +455,18 @@ L<xine(1)>
 
 =head1 AUTHOR
 
-Stephen Nelson, E<lt>steven@localdomainE<gt>
+Stephen Nelson, E<lt>stephen@cpan.orgE<gt>
+
+=head1 SPECIAL THANKS TO
+
+Joern Reder for patches and GTK integration.
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2005 by Stephen Nelson
+Copyright (C) 2005, 2006 by Stephen Nelson
 
 This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself, either Perl version 5.8.5 or,
+it under the same terms as Perl itself, either Perl version 5.8.6 or,
 at your option, any later version of Perl 5 you may have available.
 
 
