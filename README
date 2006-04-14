@@ -3,7 +3,8 @@ Video-Xine version 0.02
 
 This interface was developed as part of the Video::PlaybackMachine
 project, and as a first pass contains only enough functionality to get
-it running. It's known to work on i386 running Fedora Core 2 and 3.
+it running. It's known to work on i386 running Fedora Core 2 and 3, and
+on x86_64 on FC4.
 
 
 INSTALLATION
@@ -29,7 +30,7 @@ which provides a workable, if extremely simple, user interface.
 
 COPYRIGHT AND LICENCE
 
-Copyright (C) 2005 by Stephen Nelson
+Copyright (C) 2005, 2006 by Stephen Nelson
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.8.5 or,
