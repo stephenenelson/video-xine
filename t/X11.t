@@ -7,7 +7,7 @@ use Video::Xine;
 
 
 
-my $xine = Video::Xine->new(config_file => '/home/steven/.xine/config');
+my $xine = Video::Xine->new(config_file => "$ENV{HOME}/.xine/config");
 
 
 SKIP: {

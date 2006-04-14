@@ -14,6 +14,44 @@ our @EXPORT = qw(
   XINE_STATUS_STOP
   XINE_STATUS_PLAY
 
+  XINE_PARAM_SPEED                
+  XINE_PARAM_AV_OFFSET            
+  XINE_PARAM_AUDIO_CHANNEL_LOGICAL
+  XINE_PARAM_SPU_CHANNEL          
+  XINE_PARAM_VIDEO_CHANNEL        
+  XINE_PARAM_AUDIO_VOLUME         
+  XINE_PARAM_AUDIO_MUTE           
+  XINE_PARAM_AUDIO_COMPR_LEVEL    
+  XINE_PARAM_AUDIO_AMP_LEVEL      
+  XINE_PARAM_AUDIO_REPORT_LEVEL   
+  XINE_PARAM_VERBOSITY            
+  XINE_PARAM_SPU_OFFSET           
+  XINE_PARAM_IGNORE_VIDEO         
+  XINE_PARAM_IGNORE_AUDIO         
+  XINE_PARAM_IGNORE_SPU           
+  XINE_PARAM_BROADCASTER_PORT     
+  XINE_PARAM_METRONOM_PREBUFFER   
+  XINE_PARAM_EQ_30HZ              
+  XINE_PARAM_EQ_60HZ              
+  XINE_PARAM_EQ_125HZ             
+  XINE_PARAM_EQ_250HZ             
+  XINE_PARAM_EQ_500HZ             
+  XINE_PARAM_EQ_1000HZ            
+  XINE_PARAM_EQ_2000HZ            
+  XINE_PARAM_EQ_4000HZ            
+  XINE_PARAM_EQ_8000HZ            
+  XINE_PARAM_EQ_16000HZ           
+  XINE_PARAM_AUDIO_CLOSE_DEVICE   
+  XINE_PARAM_AUDIO_AMP_MUTE       
+  XINE_PARAM_FINE_SPEED           
+
+  XINE_SPEED_PAUSE 
+  XINE_SPEED_SLOW_4
+  XINE_SPEED_SLOW_2
+  XINE_SPEED_NORMAL
+  XINE_SPEED_FAST_2
+  XINE_SPEED_FAST_4
+
   XINE_EVENT_UI_PLAYBACK_FINISHED
   XINE_EVENT_UI_CHANNELS_CHANGED
   XINE_EVENT_UI_SET_TITLE
@@ -37,26 +75,66 @@ XSLoader::load('Video::Xine', $VERSION);
 
 # Preloaded methods go here.
 
-use constant XINE_STATUS_IDLE => 0;
-use constant XINE_STATUS_STOP => 1;
-use constant XINE_STATUS_PLAY => 2;
+use constant {
+  XINE_STATUS_IDLE                  =>  0,
+  XINE_STATUS_STOP                  =>  1,
+  XINE_STATUS_PLAY                  =>  2,
 
-use constant XINE_EVENT_UI_PLAYBACK_FINISHED => 1;
-use constant XINE_EVENT_UI_CHANNELS_CHANGED => 2;
-use constant XINE_EVENT_UI_SET_TITLE => 3;
-use constant XINE_EVENT_UI_MESSAGE => 4;
-use constant XINE_EVENT_FRAME_FORMAT_CHANGE => 5;
-use constant XINE_EVENT_AUDIO_LEVEL => 6;
-use constant XINE_EVENT_QUIT => 7;
-use constant XINE_EVENT_PROGRESS => 8;
-use constant XINE_EVENT_MRL_REFERENCE => 9;
-use constant XINE_EVENT_UI_NUM_BUTTONS => 10;
-use constant XINE_EVENT_SPU_BUTTON => 11;
-use constant XINE_EVENT_DROPPED_FRAMES => 12;
+  XINE_PARAM_SPEED                  =>  1,
+  XINE_PARAM_AV_OFFSET              =>  2,
+  XINE_PARAM_AUDIO_CHANNEL_LOGICAL  =>  3,
+  XINE_PARAM_SPU_CHANNEL            =>  4,
+  XINE_PARAM_VIDEO_CHANNEL          =>  5,
+  XINE_PARAM_AUDIO_VOLUME           =>  6,
+  XINE_PARAM_AUDIO_MUTE             =>  7,
+  XINE_PARAM_AUDIO_COMPR_LEVEL      =>  8,
+  XINE_PARAM_AUDIO_AMP_LEVEL        =>  9,
+  XINE_PARAM_AUDIO_REPORT_LEVEL     => 10,
+  XINE_PARAM_VERBOSITY              => 11,
+  XINE_PARAM_SPU_OFFSET             => 12,
+  XINE_PARAM_IGNORE_VIDEO           => 13,
+  XINE_PARAM_IGNORE_AUDIO           => 14,
+  XINE_PARAM_IGNORE_SPU             => 15,
+  XINE_PARAM_BROADCASTER_PORT       => 16,
+  XINE_PARAM_METRONOM_PREBUFFER     => 17,
+  XINE_PARAM_EQ_30HZ                => 18,
+  XINE_PARAM_EQ_60HZ                => 19,
+  XINE_PARAM_EQ_125HZ               => 20,
+  XINE_PARAM_EQ_250HZ               => 21,
+  XINE_PARAM_EQ_500HZ               => 22,
+  XINE_PARAM_EQ_1000HZ              => 23,
+  XINE_PARAM_EQ_2000HZ              => 24,
+  XINE_PARAM_EQ_4000HZ              => 25,
+  XINE_PARAM_EQ_8000HZ              => 26,
+  XINE_PARAM_EQ_16000HZ             => 27,
+  XINE_PARAM_AUDIO_CLOSE_DEVICE     => 28,
+  XINE_PARAM_AUDIO_AMP_MUTE         => 29,
+  XINE_PARAM_FINE_SPEED             => 30,
 
-use constant XINE_GUI_SEND_DRAWABLE_CHANGED => 2;
-use constant XINE_GUI_SEND_EXPOSE_EVENT => 3;
-use constant XINE_GUI_SEND_VIDEOWIN_VISIBLE => 5;
+  XINE_SPEED_PAUSE                  =>  0,
+  XINE_SPEED_SLOW_4                 =>  1,
+  XINE_SPEED_SLOW_2                 =>  2,
+  XINE_SPEED_NORMAL                 =>  4,
+  XINE_SPEED_FAST_2                 =>  8,
+  XINE_SPEED_FAST_4                 => 16,
+
+  XINE_EVENT_UI_PLAYBACK_FINISHED   =>  1,
+  XINE_EVENT_UI_CHANNELS_CHANGED    =>  2,
+  XINE_EVENT_UI_SET_TITLE           =>  3,
+  XINE_EVENT_UI_MESSAGE             =>  4,
+  XINE_EVENT_FRAME_FORMAT_CHANGE    =>  5,
+  XINE_EVENT_AUDIO_LEVEL            =>  6,
+  XINE_EVENT_QUIT                   =>  7,
+  XINE_EVENT_PROGRESS               =>  8,
+  XINE_EVENT_MRL_REFERENCE          =>  9,
+  XINE_EVENT_UI_NUM_BUTTONS         => 10,
+  XINE_EVENT_SPU_BUTTON             => 11,
+  XINE_EVENT_DROPPED_FRAMES         => 12,
+
+  XINE_GUI_SEND_DRAWABLE_CHANGED    =>  2,
+  XINE_GUI_SEND_EXPOSE_EVENT        =>  3,
+  XINE_GUI_SEND_VIDEOWIN_VISIBLE    =>  5,
+};
 
 sub new {
   my $type = shift;
@@ -190,6 +268,18 @@ sub get_status {
   return xine_get_status($self->{'stream'});
 }
 
+sub set_param {
+  my $self = shift;
+  my ($param, $value) = @_;
+  return xine_set_param($self->{'stream'}, $param, $value);
+}
+
+sub get_param {
+  my $self = shift;
+  my ($param) = @_;
+  return xine_get_param($self->{'stream'}, $param);
+}
+
 sub DESTROY {
   my $self = shift;
   xine_dispose($self->{'stream'});
@@ -220,6 +310,8 @@ sub new {
   my $type = shift;
   my ($xine, $id, $visual, $data) = @_;
 
+  $id ||= "auto";
+
   UNIVERSAL::isa($xine, 'Video::Xine')
       or croak "First argument must be of type Video::Xine (was $xine)";
 
@@ -227,7 +319,7 @@ sub new {
   $self->{'xine'} = $xine;
   if (scalar @_ > 1) {
     $self->{'driver'} = xine_open_video_driver($self->{'xine'}{'xine'},
-					       "auto",
+					       $id,
 					       $visual,
 					       $data
 					      )

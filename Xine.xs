@@ -179,6 +179,24 @@ xine_get_status(self)
 	xine_stream_t *self
 
 
+#
+# Get a stream param
+#
+int
+xine_get_param(self, param)
+	xine_stream_t *self
+        int param;
+
+
+#
+# Set a stream param
+#
+void
+xine_set_param(self, param, value)
+	xine_stream_t *self
+        int param;
+        int value;
+
 # Destroy all monsters
 void
 xine_dispose(self)
