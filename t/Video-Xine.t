@@ -5,7 +5,7 @@
 
 use strict;
 use FindBin '$Bin';
-use Test::More tests => 10;
+use Test::More tests => 11;
 BEGIN { use_ok('Video::Xine') };
 
 #########################
@@ -43,4 +43,10 @@ TEST2: {
   }
   $stream->close();
   ok(1);
+}
+
+TEST3: {
+  my $stream = $xine->stream_new();
+  $stream->open("/dev/null");
+  is($stream->get_error(), XINE_ERROR_NO_INPUT_PLUGIN);
 }
