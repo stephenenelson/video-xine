@@ -64,10 +64,18 @@ our @EXPORT = qw(
   XINE_EVENT_UI_NUM_BUTTONS
   XINE_EVENT_SPU_BUTTON
   XINE_EVENT_DROPPED_FRAMES
+  
+  XINE_ERROR_NONE
+  XINE_ERROR_NO_INPUT_PLUGIN
+  XINE_ERROR_NO_DEMUX_PLUGIN
+  XINE_ERROR_DEMUX_FAILED
+  XINE_ERROR_MALFORMED_MRL
+  XINE_ERROR_INPUT_FAILED
 
   XINE_GUI_SEND_DRAWABLE_CHANGED
   XINE_GUI_SEND_EXPOSE_EVENT
   XINE_GUI_SEND_VIDEOWIN_VISIBLE
+  
 );
 
 require XSLoader;
@@ -130,6 +138,14 @@ use constant {
   XINE_EVENT_UI_NUM_BUTTONS         => 10,
   XINE_EVENT_SPU_BUTTON             => 11,
   XINE_EVENT_DROPPED_FRAMES         => 12,
+  
+  XINE_ERROR_NONE                   =>  0,
+  XINE_ERROR_NO_INPUT_PLUGIN        =>  1,
+  XINE_ERROR_NO_DEMUX_PLUGIN        =>  2,
+  XINE_ERROR_DEMUX_FAILED           =>  3,
+  XINE_ERROR_MALFORMED_MRL          =>  4,
+  XINE_ERROR_INPUT_FAILED           =>  5,
+
 
   XINE_GUI_SEND_DRAWABLE_CHANGED    =>  2,
   XINE_GUI_SEND_EXPOSE_EVENT        =>  3,
@@ -266,6 +282,11 @@ sub get_pos_length {
 sub get_status {
   my $self = shift;
   return xine_get_status($self->{'stream'});
+}
+
+sub get_error {
+	my $self = shift;
+	return xine_get_error($self->{'stream'});
 }
 
 sub set_param {
