@@ -180,6 +180,13 @@ xine_get_status(self)
 
 
 #
+# Get error code for the stream
+#
+int
+xine_get_error(self)
+	xine_stream_t *self
+
+#
 # Get a stream param
 #
 int
