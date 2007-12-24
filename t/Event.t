@@ -14,7 +14,12 @@ SKIP: {
   skip 'X11::FullScreen required', 1 if $@;
   
   my $xine = Video::Xine->new(config_file => "$Bin/test_config");
-  my $display = X11::FullScreen::Display->new();
+
+  my $display_str = defined $ENV{'DISPLAY'} ? $ENV{'DISPLAY'} : ':0.0';
+
+  my $display = X11::FullScreen::Display->new($display_str)
+    or skip("X11::FullScreen::Display does not initialize", 1);
+
   my $window = $display->createWindow();
   $display->sync();
   my $x11_visual = 

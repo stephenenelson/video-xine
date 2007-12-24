@@ -4,10 +4,11 @@ use FindBin '$Bin';
 use Test::More tests => 1;
 
 use Video::Xine;
+if ($@) { skip_all(); }
 
 
 
-my $xine = Video::Xine->new(config_file => "$ENV{HOME}/.xine/config");
+my $xine = Video::Xine->new(config_file => "$Bin/test_config");
 
 
 SKIP: {
@@ -15,7 +16,11 @@ SKIP: {
 
   skip("X11::FullScreen module required for X11 tests", 1) if $@;
 
-  my $display = X11::FullScreen::Display->new();
+  my $display_str = defined $ENV{'DISPLAY'} ? $ENV{'DISPLAY'} : ':0.0';
+
+  my $display = X11::FullScreen::Display->new($display_str)
+    or skip("X11::FullScreen::Display does not initialize", 1);
+
   my $window = $display->createWindow();
   $display->sync();
   my $x11_visual = Video::Xine::Util::make_x11_visual($display,
