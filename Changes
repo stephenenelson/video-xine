@@ -1,5 +1,9 @@
 Revision history for Perl extension Video::Xine.
 
+0.04  Stephen Nelson  <stephenenelson@mac.com>
+
+	* Skip tests without X11. Default to display :0.0.
+
 0.01  Tue Mar 15 07:24:37 2005
 	- original version; created by h2xs 1.23 with options
 		-A -n Video::Xine /usr/include/xine.h -L/usr/lib -lxine -lz -lnsl -lpthread -lrt
