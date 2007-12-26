@@ -1,3 +1,7 @@
+2007-12-26  Stephen Nelson  <stephenenelson@mac.com> (0.06)
+
+	* Fixed installation issue
+
 2007-12-26  Stephen Nelson  <stephenenelson@mac.com> (0.05)
 
 	* Moved 'Changes' to 'ChangeLog'

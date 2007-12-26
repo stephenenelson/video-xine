@@ -11,7 +11,7 @@ use 5.008003;
 use ExtUtils::MakeMaker;
 
 my ($xine_include, $xine_lib);
-if ( my $xc = find_xine_config ) {
+if ( my $xc = find_xine_config() ) {
     $xine_lib = qx/$xc --libs/;
     $xine_include = qx/$xc --cflags/;
 }
