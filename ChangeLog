@@ -1,3 +1,9 @@
+2007-12-26  Stephen Nelson  <stephenenelson@mac.com> (0.05)
+
+	* Moved 'Changes' to 'ChangeLog'
+	* Made Makefile.PL check for xine lib and get library configuration from xine-config.
+	* Got rid of spurious META.yml in directory.
+
 Revision history for Perl extension Video::Xine.
 
 0.04  Wed Dec 26 02:36:21 PST 2007

@@ -1,10 +1,8 @@
 Changes
+inc/Devel/CheckLib.pm
 lib/Video/Xine.pm
 Makefile.PL
 MANIFEST
-META.yml			Module meta-data (added by MakeMaker)
-notes/problems.txt
-notes/x11_visual_notes.txt
 ppport.h
 README
 t/drunk_as_an_owl.ogg
