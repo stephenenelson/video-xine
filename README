@@ -1,11 +1,8 @@
-Video-Xine version 0.02
+Video-Xine version 0.04
 =======================
 
-This interface was developed as part of the Video::PlaybackMachine
-project, and as a first pass contains only enough functionality to get
-it running. It's known to work on i386 running Fedora Core 2 and 3, and
-on x86_64 on FC4.
-
+This is an interface to the xine-lib library. It can be used to create
+a Perl-controlled instance of Xine.
 
 INSTALLATION
 
@@ -30,11 +27,9 @@ which provides a workable, if extremely simple, user interface.
 
 COPYRIGHT AND LICENCE
 
-Copyright (C) 2005, 2006 by Stephen Nelson
+Copyright (C) 2005-2007 by Stephen Nelson
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.8.5 or,
 at your option, any later version of Perl 5 you may have available.
 
-This library is not worth too much without Xine, which is available
-under the GNU public license.
