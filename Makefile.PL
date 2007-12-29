@@ -1,13 +1,19 @@
+use strict;
+use warnings;
+
 use 5.008003;
 use ExtUtils::MakeMaker;
 use File::Spec;
 
-my ($xine_include, $xine_lib, @lib_dirs);
+my ($xine_include, $xine_lib);
 if ( my $xc = find_xine_config() ) {
-    $xine_lib = qx/$xc --libs/;
-    while ( $xine_lib =~ m/\b-L(\w+)/g ) {
+    my $xine_lib_str = qx/$xc --libs/;
+    my @lib_dirs;
+    while ( $xine_lib_str =~ m/(-[Ll]\S+)/g ) {
       push(@lib_dirs, $1);
     }
+    $xine_lib = join(' ', @lib_dirs);
+    
     $xine_include = qx/$xc --cflags/;
 }
 else {
@@ -15,13 +21,13 @@ else {
     exit(0);
 }
 
+# Hard to imagine xine-config installed and functioning and libxine
+# not, but we'll leave this check in to make doubly sure.
+
 use lib qw(inc);
 use Devel::CheckLib;
 
-check_lib_or_exit(
-    lib => [qw(xine)],
-    libdirs => \@lib_dirs
-);
+check_lib_or_exit(LIBS => $xine_lib . " -lxine");
 
 WriteMakefile(
 	      NAME              => 'Video::Xine',
