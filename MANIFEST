@@ -5,7 +5,7 @@ Makefile.PL
 MANIFEST
 ppport.h
 README
-t/drunk_as_an_owl.ogg
+t/test.ogg
 t/Event.t
 t/test_config
 t/time_015.avi
