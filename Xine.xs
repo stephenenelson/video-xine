@@ -219,7 +219,7 @@ xine_open_audio_driver(self,id=NULL,data=NULL)
 	xine_t *self
 	const char *id
 	void *data
-	
+
 ##
 ## Close an opened audio driver
 ##
