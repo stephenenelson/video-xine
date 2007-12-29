@@ -1,3 +1,12 @@
+2007-12-28  Stephen Nelson  <stephenenelson@mac.com> (0.07)
+
+	* In tests, we now use null drivers or skip unless the environment
+	variable VIDEO_XINE_SHOW is set.
+	* Documented Video::Xine and Video::Xine::Stream
+	* Now we pass through arguments properly to audio and video drivers
+	* Sped up Event test
+	* Changed test audio from "drunk as an owl" to short voice recording
+
 2007-12-26  Stephen Nelson  <stephenenelson@mac.com> (0.06)
 
 	* Fixed installation issue
