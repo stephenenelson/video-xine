@@ -1,6 +1,3 @@
-# Before `make install' is performed this script should be runnable with
-# `make test'. After `make install' it should work as `perl Video-Xine.t'
-
 #########################
 
 use strict;
@@ -11,12 +8,24 @@ BEGIN { use_ok('Video::Xine') };
 #########################
 
 
-my $xine = Video::Xine->new(config_file => "$Bin/test_config");
-$xine->set_param(1,1);
+my $xine = Video::Xine->new()
+  or die "Couldn't initialize xine";
+if (defined $ENV{'XINE_ENGINE_PARAM_VERBOSITY'}) {
+  $xine->set_param(XINE_ENGINE_PARAM_VERBOSITY, $ENV{'XINE_ENGINE_PARAM_VERBOSITY'});
+}
+my $null_audio;
+
+if ($ENV{'VIDEO_XINE_SHOW'}) {
+  $null_audio = Video::Xine::Driver::Audio->new($xine);
+}
+else {
+  $null_audio = Video::Xine::Driver::Audio->new($xine, 'none');
+}
 ok(1);
 
+# Get length and do a quick status check
 TEST1: {
-  my $stream  = $xine->stream_new();
+  my $stream  = $xine->stream_new($null_audio);
   is($stream->get_status(), XINE_STATUS_IDLE);
   $stream->open("$Bin/time_015.avi")
     or die "Couldn't open '$Bin/time_015.avi'";
@@ -33,11 +42,11 @@ TEST1: {
 }
 
 TEST2: {
-  my $stream = $xine->stream_new();
-  $stream->open("$Bin/drunk_as_an_owl.ogg")
-    or die "Couldn't open '$Bin/drunk_as_an_owl.ogg'";
+  my $stream = $xine->stream_new($null_audio);
+  $stream->open("$Bin/test.ogg")
+    or die "Couldn't open '$Bin/test.ogg'";
   $stream->play()
-	or die "Couldn't play '$Bin/drunk_as_an_owl.ogg'";
+	or die "Couldn't play '$Bin/test.ogg'";
   while ($stream->get_status() == XINE_STATUS_PLAY) {
     sleep 1;
   }

@@ -16,7 +16,7 @@ SKIP: {
 
   my $xine = Video::Xine->new(config_file => "$Bin/test_config");
 
-  my ($driver, $display, $window, $x11_visual);
+  my ($driver, $display_str, $display, $window);
 
   if (defined($ENV{'VIDEO_XINE_SHOW'}) && $ENV{'VIDEO_XINE_SHOW'}) {
     my $display_str = defined $ENV{'DISPLAY'} ? $ENV{'DISPLAY'} : ':0.0';
@@ -26,7 +26,7 @@ SKIP: {
   
     $window = $display->createWindow();
     $display->sync();
-    $x11_visual = 
+    my $x11_visual = 
       Video::Xine::Util::make_x11_visual($display,
 					 $display->getDefaultScreen(),
 					 $window,
@@ -48,7 +48,7 @@ SKIP: {
   
   $stream->open("$Bin/time_015.avi")
     or die "Couldn't open '$Bin/time_015.avi'";
-  $stream->play();
+  $stream->play( 0, int(.7 * 65535) );
 
   PLAY: for (;;) {
     while ( my $event = $queue->get_event() ) {
@@ -59,9 +59,11 @@ SKIP: {
     sleep(1);
   }
 
-  $stream->close();
-
   ok(1);
+
+  # Avoid closing segfault (!)
+  $null_audio = undef;
+  $driver = undef;
 }
 
 

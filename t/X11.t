@@ -1,4 +1,5 @@
 use strict;
+use warnings;
 
 use FindBin '$Bin';
 use Test::More tests => 1;
@@ -16,6 +17,10 @@ SKIP: {
 
   skip("X11::FullScreen module required for X11 tests", 1) if $@;
 
+  if (! $ENV{'VIDEO_XINE_SHOW'}) {
+    skip("Skipping X11 tests. Set VIDEO_XINE_SHOW to enable.", 1);
+  }
+
   my $display_str = defined $ENV{'DISPLAY'} ? $ENV{'DISPLAY'} : ':0.0';
 
   my $display = X11::FullScreen::Display->new($display_str)
@@ -31,7 +36,8 @@ SKIP: {
 						      $display->getPixelAspect()
 						     );
   my $driver = Video::Xine::Driver::Video->new($xine,"auto",1,$x11_visual);
-  my $stream = $xine->stream_new(undef, $driver);
+  my $audio_driver = Video::Xine::Driver::Audio->new($xine, 'none');
+  my $stream = $xine->stream_new($audio_driver, $driver);
   
   $stream->open("$Bin/time_015.avi")
     or die "Couldn't open '$Bin/time_015.avi'";
