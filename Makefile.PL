@@ -2,10 +2,12 @@ use 5.008003;
 use ExtUtils::MakeMaker;
 use File::Spec;
 
-my ($xine_include, $xine_lib);
+my ($xine_include, $xine_lib, @lib_dirs);
 if ( my $xc = find_xine_config() ) {
     $xine_lib = qx/$xc --libs/;
-    $xine_lib =~ s/-[^Ll]\w+\b//g; # Eliminate nonlibrary arguments
+    while ( $xine_lib =~ m/\b-L(\w+)/g ) {
+      push(@lib_dirs, $1);
+    }
     $xine_include = qx/$xc --cflags/;
 }
 else {
@@ -18,7 +20,7 @@ use Devel::CheckLib;
 
 check_lib_or_exit(
     lib => [qw(xine)],
-    LIBS => $xine_lib
+    libdirs => \@lib_dirs
 );
 
 WriteMakefile(
