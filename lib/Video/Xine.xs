@@ -22,7 +22,8 @@ static void unscaled_dest_size_cb (void *user_data,
 			int *dest_width, int *dest_height,
 			double *dest_pixel_aspect) 
 {
-	user_data_t* ud = (user_data_t *) user_data;
+	user_data_t* ud;
+	ud = (user_data_t *) user_data;
 	*dest_width = ud->width;
 	*dest_height = ud->height;
 	*dest_pixel_aspect = ud->aspect;
@@ -36,11 +37,13 @@ static void unscaled_frame_output_cb (void *user_data,
 			   int *dest_width, int *dest_height,
 			   double *dest_pixel_aspect,
 			   int *win_x, int *win_y) {
+	user_data_t* ud;
+
 	*dest_x = 0;
 	*dest_y = 0;
 	*win_x = 0;
 	*win_y = 0;
-	user_data_t* ud = (user_data_t *) user_data;
+	ud = (user_data_t *) user_data;
 	*dest_width = ud->width;
 	*dest_height = ud->height;
 	*dest_pixel_aspect = ud->aspect;
@@ -272,7 +275,7 @@ make_x11_visual(display,screen,window,width,height,aspect)
 	int width
 	int height
 	double aspect
-	INIT:
+	PREINIT:
 		user_data_t * userdata;
 	CODE:
 		userdata = (user_data_t*) safemalloc( sizeof(user_data_t) );
