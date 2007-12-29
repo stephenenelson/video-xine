@@ -7,7 +7,7 @@ use warnings;
 use Exporter;
 use Carp;
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 our @ISA = qw(Exporter);
 our @EXPORT = qw(
   XINE_STATUS_IDLE
@@ -224,8 +224,8 @@ sub new {
   $self->{'audio_port'} = $audio_port;
   $self->{'video_port'} = $video_port;
   $self->{'stream'} = xine_stream_new($xine,
-				      $audio_port->{driver},
-				      $video_port->{driver});
+				      $audio_port->{'driver'},
+				      $video_port->{'driver'});
 
   bless $self, $type;
 
@@ -322,10 +322,23 @@ package Video::Xine::Driver::Audio;
 
 sub new {
   my $type = shift;
-  my ($xine) = @_;
+  my ($xine, $id, $data) = @_;
   my $self = {};
+
   $self->{'xine'} = $xine;
-  $self->{'driver'} = xine_open_audio_driver($xine->{'xine'})
+
+  # Need to figure out how to make undefs into NULLs
+  if ( defined($data) ) {
+    $self->{'driver'} = xine_open_audio_driver($xine->{'xine'}, $id, $data);
+  }
+  elsif ( defined($id) ) {
+    $self->{'driver'} = xine_open_audio_driver($xine->{'xine'}, $id);
+  }
+  else {
+    $self->{'driver'} = xine_open_audio_driver($xine->{'xine'});
+  }
+
+  $self->{'driver'}
     or return;
   bless $self, $type;
 }
@@ -350,7 +363,7 @@ sub new {
 
   my $self = {};
   $self->{'xine'} = $xine;
-  if (scalar @_ > 1) {
+  if ( defined($visual) && defined($data) ) {
     $self->{'driver'} = xine_open_video_driver($self->{'xine'}{'xine'},
 					       $id,
 					       $visual,
@@ -358,8 +371,15 @@ sub new {
 					      )
       or return;
   }
+  elsif ( defined($id) ) {
+    $self->{'driver'} = xine_open_video_driver($self->{'xine'}{'xine'},
+					       $id
+					      )
+      or return;
+
+  }
   else {
-    # Open a null driver
+    # Open a null/auto driver
     $self->{'driver'} = xine_open_video_driver($self->{'xine'}{'xine'})
       or return;
   }
@@ -458,12 +478,77 @@ this interface. Instead, you must set up the window using your own
 windowing code, and pass the window information to Xine.
 
 
-=head2 EXPORT
+=head2 METHODS
 
-=head3 STATUS CONSTANTS
+=head3 new()
 
-The Status constants are the results for a get_status() call. See
-xine.h for details.
+Constructor. Takes named argument 'config_file'.
+
+=head3 set_param()
+
+  set_param($param, $value);
+
+Sets an engine parameter. Currently, this is only useful for setting
+the Xine logging level.
+
+=head3 stream_new()
+
+  stream_new($audio_port, $video_port)
+
+Creates a new stream. The C<$audio_port> and C<$video_port> options
+are optional and default to automatically-selected drivers. A
+convenience method around Xine::Stream::new.
+
+=head2 STREAM METHODS
+
+These are methods which can be used on the Video::Xine::Stream class
+and object.
+
+=head3 new()
+
+  new($xine, $audio_port, $video_port)
+
+Creates a new Stream object. The C<$audio_port> and C<$video_port> options
+are optional and default to automatically-selected drivers.
+
+=head3 get_video_port()
+
+ Returns the video port, also known as the video driver.
+
+=head3 open()
+
+ open($mrl)
+
+Opens the stream to an MRL, which is a URL-like construction used by
+Xine to locate media files. See the xine documentation for details.
+
+=head3 play()
+
+  play($start_pos, $start_time)
+
+Starts playing the stream at a specific position or specific time. Both C<$start_pos> and C<$start_time> are optional and default to 0.
+
+=head3 stop()
+
+Stops the stream.
+
+=head3 close()
+
+Close the stream. You can re-use the same stream again and again.
+
+=head3 get_pos_length()
+
+  ($pos_pct, $pos_time, $length_time) = $s->get_pos_length();
+
+Gets position / length information. C<$pos_pct> is a value between 1
+and 65535 indicating how far we've proceeded through the
+stream. C<$pos_time> gives how far we've proceeded through the stream
+in milliseconds, and C<$length_time> gives the total length of the
+stream in milliseconds.
+
+=head3 get_status()
+
+Returns the play status of the stream.
 
 =over 4
 
@@ -479,7 +564,25 @@ XINE_STATUS_PLAY
 
 Indicates that the stream is playing.
 
+=back
 
+=head3 get_error()
+
+Returns the last error message.
+
+=head3 set_param()
+
+  $s->set_param($param, $value)
+
+Sets a parameter on the stream. C<$param> should be a xine parameter
+constant. See xine.h for details.
+
+=head3 get_param()
+
+  $s->get_param($param)
+
+Returns a parameter from the stream. C<$param> should be a xine
+parameter constant.
 
 
 =head1 SEE ALSO
@@ -496,7 +599,7 @@ Joern Reder for patches and GTK integration.
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2005, 2006 by Stephen Nelson
+Copyright (C) 2005-2007 by Stephen Nelson
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.8.6 or,
