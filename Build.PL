@@ -2,8 +2,13 @@ use strict;
 use warnings;
 
 use Module::Build;
+use Config;
 
 ### Based on Build.PL for Image::Imlib2
+if (! $Config{'usethreads'}) {
+    warn "Unable to install. The Xine module requires multithread support.\n";
+    exit(0);
+}
 
 # We need to find xine-config
 my $CONFIG = "xine-config";
@@ -20,11 +25,13 @@ Otherwise, if you have installed xine-lib and development libraries, modify the 
 my $libs = `$CONFIG --libs`;
 my $cflags = `$CONFIG --cflags`;
 
+
 my $build = Module::Build->new(
 			       extra_compiler_flags => $cflags,
 			       extra_linker_flags => $libs,
 			       license => 'perl',
 			       module_name => 'Video::Xine',
+			       create_makefile_pl => 'passthrough',
 			       requires => {
 					    'Module::Build' => '0.28',
 					    'Test::More' => '0.01',
@@ -33,3 +40,4 @@ my $build = Module::Build->new(
 			      );
 
 $build->create_build_script();
+

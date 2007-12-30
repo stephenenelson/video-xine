@@ -2,8 +2,6 @@ Build.PL
 ChangeLog
 inc/Devel/CheckLib.pm
 lib/Video/ppport.h
-lib/Video/Xine.c
-lib/Video/Xine.o
 lib/Video/Xine.pm
 lib/Video/Xine.xs
 MANIFEST
@@ -16,4 +14,3 @@ t/Video-Xine.t
 t/X11.t
 typemap
 
-META.yml
