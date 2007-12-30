@@ -33,9 +33,9 @@ my $build = Module::Build->new(
 			       module_name => 'Video::Xine',
 			       create_makefile_pl => 'passthrough',
 			       requires => {
-					    'Module::Build' => '0.28',
+					    'Module::Build' => '0',
 					    'Test::More' => '0.01',
-					    'ExtUtils::CBuilder' => '0.21'
+					    'ExtUtils::CBuilder' => '0'
 					   },
 			      );
 
