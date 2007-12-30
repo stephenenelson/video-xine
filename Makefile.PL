@@ -5,6 +5,11 @@ use 5.008003;
 use ExtUtils::MakeMaker;
 use File::Spec;
 
+if (! $Config{'usethreads'}) {
+    warn "Unable to install. The Xine module requires multithread support.\n";
+    exit(0);
+}
+
 my ($xine_include, $xine_lib);
 if ( my $xc = find_xine_config() ) {
     my $xine_lib_str = qx/$xc --libs/;
