@@ -8,22 +8,24 @@ use Video::Xine;
 our $DEBUG = 0;
 
 SKIP: {
-  eval { require X11::FullScreen; };
-  if ($@) {
-    warn "Unable to load X11::FullScreen: $@\n";
-    $ENV{'VIDEO_XINE_SHOW'} = 0;
-  }
 
   my $xine = Video::Xine->new(config_file => "$Bin/test_config");
 
   my ($driver, $display_str, $display, $window);
 
   if (defined($ENV{'VIDEO_XINE_SHOW'}) && $ENV{'VIDEO_XINE_SHOW'}) {
+    eval { require X11::FullScreen; };
+
+    if ($@) {
+      skip("Couldn't load X11::FullScreen: $@", 1);
+    }
+
     my $display_str = defined $ENV{'DISPLAY'} ? $ENV{'DISPLAY'} : ':0.0';
+
 
     $display = X11::FullScreen::Display->new($display_str)
       or skip("X11::FullScreen::Display does not initialize", 1);
-  
+
     $window = $display->createWindow();
     $display->sync();
     my $x11_visual = 
