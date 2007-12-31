@@ -7,7 +7,7 @@ use warnings;
 use Exporter;
 use Carp;
 
-our $VERSION = '0.08';
+our $VERSION = '0.10';
 our @ISA = qw(Exporter);
 our @EXPORT = qw(
   XINE_STATUS_IDLE
@@ -81,6 +81,19 @@ our @EXPORT = qw(
   XINE_VERBOSITY_NONE
   XINE_VERBOSITY_LOG
   XINE_VERBOSITY_DEBUG  
+
+  XINE_VISUAL_TYPE_NONE
+  XINE_VISUAL_TYPE_X11
+  XINE_VISUAL_TYPE_X11_2
+  XINE_VISUAL_TYPE_AA
+  XINE_VISUAL_TYPE_FB
+  XINE_VISUAL_TYPE_GTK
+  XINE_VISUAL_TYPE_DFB
+  XINE_VISUAL_TYPE_PM
+  XINE_VISUAL_TYPE_DIRECTX
+  XINE_VISUAL_TYPE_CACA
+  XINE_VISUAL_TYPE_MACOSX
+  XINE_VISUAL_TYPE_XCB
 );
 
 require XSLoader;
@@ -160,8 +173,20 @@ use constant {
   
   XINE_VERBOSITY_NONE               => 0,
   XINE_VERBOSITY_LOG                => 1,
-  XINE_VERBOSITY_DEBUG              => 2
-  
+  XINE_VERBOSITY_DEBUG              => 2,
+
+  XINE_VISUAL_TYPE_NONE             => 0,
+  XINE_VISUAL_TYPE_X11              => 1,
+  XINE_VISUAL_TYPE_X11_2            => 10,
+  XINE_VISUAL_TYPE_AA               => 2,
+  XINE_VISUAL_TYPE_FB               => 3,
+  XINE_VISUAL_TYPE_GTK              => 4,
+  XINE_VISUAL_TYPE_DFB              => 5,
+  XINE_VISUAL_TYPE_PM               => 6,
+  XINE_VISUAL_TYPE_DIRECTX          => 7,
+  XINE_VISUAL_TYPE_CACA             => 8,
+  XINE_VISUAL_TYPE_MACOSX           => 9,
+  XINE_VISUAL_TYPE_XCB              => 11
 };
 
 sub new {
@@ -584,6 +609,120 @@ constant. See xine.h for details.
 Returns a parameter from the stream. C<$param> should be a xine
 parameter constant.
 
+=head2 AUDIO DRIVER METHODS
+
+=head3 new()
+
+  new($xine, $id, $data)
+
+Creates a new audio driver for opening streams. C<$id> and C<$data>
+are optional. Returns undef on failure. If C<$id> is undefined, returns
+Xine's idea of the default audio driver.
+
+Example:
+
+  # Creates an audio driver that doesn't make any noise
+  my $audio_driver = Video::Xine::Driver::Audio->new($xine, 'none')
+     or die "Couldn't load audio driver!";
+
+
+=head2 VIDEO DRIVER METHODS
+
+=head3 new()
+
+  new($xine, $id, $visual, $data)
+
+Returns a video driver which can be used to open streams. C<id>,
+C<$visual>, and C<$data> are optional. If C<$id> is undefined, returns
+an automatically-chosen driver.
+
+C<$visual> is the visual type, which should be an integer. Video::Xine
+provides a series of constants indicating the different visual types:
+
+=over 4
+
+=item *
+
+XINE_VISUAL_TYPE_NONE
+
+=item *
+
+XINE_VISUAL_TYPE_X11
+
+=item *
+
+XINE_VISUAL_TYPE_X11_2
+
+=item *
+
+XINE_VISUAL_TYPE_AA
+
+=item *
+
+XINE_VISUAL_TYPE_FB
+
+=item *
+
+XINE_VISUAL_TYPE_GTK
+
+=item *
+
+XINE_VISUAL_TYPE_DFB
+
+=item *
+
+XINE_VISUAL_TYPE_PM
+
+=item *
+
+XINE_VISUAL_TYPE_DIRECTX
+
+=item *
+
+XINE_VISUAL_TYPE_CACA
+
+=item *
+
+XINE_VISUAL_TYPE_MACOSX
+
+=item *
+
+XINE_VISUAL_TYPE_XCB
+
+=back
+
+
+C<$data> is an opaque value dependent on the visual type. For
+XINE_VISUAL_TYPE_X11, C<$data> is of type
+C<x11_visual_type>, a C struct which should be created with with the
+method C<Video::Xine::Util::make_x11_visual()>.
+
+Example:
+
+  my $display = X11::FullScreen::Display->new($display_str);
+
+  my $x11_visual = Video::Xine::Util::make_x11_visual($display,
+						      $display->getDefaultScreen(),
+						      $display->createWindow(),
+						      $display->getWidth(),
+						      $display->getHeight(),
+						      $display->getPixelAspect()
+						     );
+  my $driver = Video::Xine::Driver::Video->new($xine,"Xv",XINE_VISUAL_TYPE_X11, $x11_visual)
+    or die "Couldn't load video driver";
+
+
+=head2 UTILITY SUBROUTINES
+
+These subroutines are found in the package Video::Xine::Util.
+
+=head3 make_x11_visual()
+
+ make_x11_visual($x_display, $screen, $window_id, $width, $height, $aspect)
+
+Returns a C struct suitable for passing to the
+Video::Xine::Driver::Video constructor with a XINE_VISUAL_TYPE_X11.
+
 
 =head1 SEE ALSO
 
@@ -599,7 +738,7 @@ Joern Reder
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2005-2007 by Stephen Nelson
+Copyright (C) 2005-2008 by Stephen Nelson
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.8.6 or,
