@@ -1,0 +1,13 @@
+^_build
+^Build$
+^blib
+~$
+\.bak$
+^MANIFEST\.SKIP$
+.svn
+.project
+Makefile
+notes
+tar.gz
+tar
+make_rpm.sh
