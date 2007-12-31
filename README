@@ -8,26 +8,28 @@ INSTALLATION
 
 To install this module type the following:
 
-   perl Makefile.PL
-   make
-   make test
-   make install
+   perl Build.PL
+   ./Build
+   ./Build test
+   ./Build install
 
 DEPENDENCIES
 
 This module requires these other modules and libraries:
 
   xine-lib, available from http://xinehq.de
+  Module::Build
+  Test::More
 
 In addition, if you wish to actually display video, you probably want:
 
   X11::FullScreen
 
-which provides a workable, if extremely simple, user interface.
+which provides a workable, if extremely simple, windowing toolkit.
 
 COPYRIGHT AND LICENCE
 
-Copyright (C) 2005-2007 by Stephen Nelson
+Copyright (C) 2005-2008 by Stephen Nelson
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.8.5 or,

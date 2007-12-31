@@ -723,6 +723,15 @@ These subroutines are found in the package Video::Xine::Util.
 Returns a C struct suitable for passing to the
 Video::Xine::Driver::Video constructor with a XINE_VISUAL_TYPE_X11.
 
+=head1 BUGS
+
+Due to Perl's unordered garbage collection during global destruction,
+Video::Xine may cause a segmentation fault as your program
+terminates. The current workaround is to make sure that your drivers
+are garbage-collected before your Xine instance by explicitly setting
+them to undef before the end of the program.
+
+This code is in BETA state. I do not expect major API changes.
 
 =head1 SEE ALSO
 

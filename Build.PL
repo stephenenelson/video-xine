@@ -36,6 +36,10 @@ my $build = Module::Build->new(
 					    'Test::More' => '0.01',
 					    'ExtUtils::CBuilder' => '0'
 					   },
+			       recommends => {
+					      'X11::FullScreen' => '0',
+					      'perl' => '5.8.5'
+					     },
 			      );
 
 $build->create_build_script();
