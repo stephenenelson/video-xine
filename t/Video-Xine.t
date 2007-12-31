@@ -60,7 +60,7 @@ TEST2: {
 
 TODO: {
   local $TODO = 1;
-  my $stream = $xine->stream_new();
+  my $stream = $xine->stream_new($null_audio);
   $stream->open("/dev/null");
   is($stream->get_error(), XINE_ERROR_NO_INPUT_PLUGIN);
 }
