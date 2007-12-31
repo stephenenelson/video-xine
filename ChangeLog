@@ -5,6 +5,8 @@
 	* Changed Joern Reder thank-you to avoid confusion, since we
 	haven't fully figured out GTK2 integration yet.
 	* Turned on 'warnings' in Video-Xine.t
+	* Eliminated attempt to load X11::FullScreen when not going to be used
+	
 
 2007-12-28  Stephen Nelson  <stephenenelson@mac.com> (0.07)
 

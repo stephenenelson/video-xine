@@ -36,10 +36,12 @@ SKIP: {
 					 $display->getHeight(),
 					 $display->getPixelAspect()
 					);
-    $driver = Video::Xine::Driver::Video->new($xine,"auto", 1, $x11_visual);
+    $driver = Video::Xine::Driver::Video->new($xine,"auto", 1, $x11_visual)
+	or skip("Unable to load video driver", 1);
   }
   else {
-    $driver = make_none_driver($xine);
+    $driver = Video::Xine::Driver::Video->new($xine, 'none')
+	or skip("Unable to load 'none' video driver", 1);
   }
 
   my $null_audio = Video::Xine::Driver::Audio->new($xine, 'none')
@@ -70,8 +72,3 @@ SKIP: {
 }
 
 
-sub make_none_driver {
-  my ($xine) = @_;
-
-  return Video::Xine::Driver::Video->new($xine, 'none');
-}

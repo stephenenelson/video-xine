@@ -35,9 +35,10 @@ SKIP: {
 						      $display->getHeight(),
 						      $display->getPixelAspect()
 						     );
-  my $driver = Video::Xine::Driver::Video->new($xine,"auto",1,$x11_visual);
+  my $driver = Video::Xine::Driver::Video->new($xine,"auto",1,$x11_visual)
+    or skip("Couldn't load video driver", 1);
   my $audio_driver = Video::Xine::Driver::Audio->new($xine, 'none')
-    or skip "Unable to load 'none' driver", 1;
+    or skip "Unable to load audio driver", 1;
   my $stream = $xine->stream_new($audio_driver, $driver);
   
   $stream->open("$Bin/time_015.avi")
