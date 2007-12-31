@@ -1,12 +1,21 @@
-2007-12-30  Stephen Nelson  <stephenenelson@mac.com> (0.08)
+2007-12-30  Stephen Nelson  <stephenenelson@mac.com> (0.10)
+	* (Remote debugging via CPANTESTS is fun!)
+	* Removed Makefile.PL from the distribution (for real this time)
+	* Documented driver classes
+	* Added constants for visual types
+	
 
+2007-12-30  Stephen Nelson  <stephenenelson@mac.com> (0.09)
+	* Fixed final (hopefully!) stream opening in test to use null audio
+	* Took out compatibility Makefile.PL, since it's messing up bailouts
+
+2007-12-30  Stephen Nelson  <stephenenelson@mac.com> (0.08)
 	* In tests, we now skip tests if we can't create the appropriate
 	audio driver
 	* Changed Joern Reder thank-you to avoid confusion, since we
 	haven't fully figured out GTK2 integration yet.
 	* Turned on 'warnings' in Video-Xine.t
 	* Eliminated attempt to load X11::FullScreen when not going to be used
-	
 
 2007-12-28  Stephen Nelson  <stephenenelson@mac.com> (0.07)
 
