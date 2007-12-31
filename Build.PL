@@ -31,7 +31,6 @@ my $build = Module::Build->new(
 			       extra_linker_flags => $libs,
 			       license => 'perl',
 			       module_name => 'Video::Xine',
-			       create_makefile_pl => 'passthrough',
 			       requires => {
 					    'Module::Build' => '0',
 					    'Test::More' => '0.01',
