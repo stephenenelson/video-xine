@@ -13,6 +13,4 @@ t/time_015.avi
 t/Video-Xine.t
 t/X11.t
 typemap
-
-Makefile.PL
 META.yml
