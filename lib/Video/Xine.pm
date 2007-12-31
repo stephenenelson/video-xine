@@ -7,7 +7,7 @@ use warnings;
 use Exporter;
 use Carp;
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 our @ISA = qw(Exporter);
 our @EXPORT = qw(
   XINE_STATUS_IDLE
@@ -595,7 +595,7 @@ Stephen Nelson, E<lt>stephen@cpan.orgE<gt>
 
 =head1 SPECIAL THANKS TO
 
-Joern Reder for patches and GTK integration.
+Joern Reder
 
 =head1 COPYRIGHT AND LICENSE
 

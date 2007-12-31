@@ -1,3 +1,11 @@
+2007-12-30  Stephen Nelson  <stephenenelson@mac.com> (0.08)
+
+	* In tests, we now skip tests if we can't create the appropriate
+	audio driver
+	* Changed Joern Reder thank-you to avoid confusion, since we
+	haven't fully figured out GTK2 integration yet.
+	* Turned on 'warnings' in Video-Xine.t
+
 2007-12-28  Stephen Nelson  <stephenenelson@mac.com> (0.07)
 
 	* In tests, we now use null drivers or skip unless the environment

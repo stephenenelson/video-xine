@@ -42,7 +42,8 @@ SKIP: {
     $driver = make_none_driver($xine);
   }
 
-  my $null_audio = Video::Xine::Driver::Audio->new($xine, 'none');
+  my $null_audio = Video::Xine::Driver::Audio->new($xine, 'none')
+    or skip q{Could not load audio driver 'none'}, 1;
 
   my $stream = $xine->stream_new($null_audio, $driver);
 

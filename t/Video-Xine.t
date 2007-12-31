@@ -1,6 +1,7 @@
 #########################
 
 use strict;
+use warnings;
 use FindBin '$Bin';
 use Test::More tests => 11;
 BEGIN { use_ok('Video::Xine') };
@@ -15,11 +16,14 @@ if (defined $ENV{'XINE_ENGINE_PARAM_VERBOSITY'}) {
 }
 my $null_audio;
 
+SKIP: {
+
 if ($ENV{'VIDEO_XINE_SHOW'}) {
   $null_audio = Video::Xine::Driver::Audio->new($xine);
 }
 else {
-  $null_audio = Video::Xine::Driver::Audio->new($xine, 'none');
+  $null_audio = Video::Xine::Driver::Audio->new($xine, 'none')
+    or skip "Couldn't open 'none' driver", 10;
 }
 ok(1);
 
@@ -59,4 +63,6 @@ TODO: {
   my $stream = $xine->stream_new();
   $stream->open("/dev/null");
   is($stream->get_error(), XINE_ERROR_NO_INPUT_PLUGIN);
+}
+
 }
