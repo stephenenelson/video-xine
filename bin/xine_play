@@ -1,0 +1,140 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+use Pod::Usage;
+use Getopt::Long;
+
+eval "use Time::HiRes 'sleep'";
+
+use Video::Xine;
+
+my $config_file = "$ENV{'HOME'}/.xine/config";
+my $loop = 0;
+
+my $result = GetOptions('config=s' => \$config_file, 
+			'loop' => \$loop
+		       )
+  or pod2usage(2);
+
+pod2usage("$0: No MRLs specified.\n") if (@ARGV < 1);
+
+my @mrls = @ARGV;
+
+MAIN: {
+  my $xine = make_xine();
+
+  my ($vo, @vo_additional) = make_video_driver($xine);
+  my ($ao, @xo_additional) = make_audio_driver($xine);
+
+  my $stream = $xine->stream_new($ao, $vo);
+
+  LOOP: while (1) {
+      MRL: foreach my $mrl ( @mrls ) {
+	  $stream->open($mrl)
+	    or do {
+		print STDERR "Couldn't open '$mrl': ", $xine->get_error(), "\n";
+		next MRL;
+	    };
+	  $stream->play();
+	  while ( $stream->get_status() == XINE_STATUS_PLAY) {
+	      sleep(.1);
+	  }
+      }
+
+	$loop or last LOOP;
+  }
+  
+  $vo = undef;
+  $ao = undef;
+
+}
+
+sub make_video_driver {
+  my ($xine) = @_;
+
+  if (my ($x11_driver, @x11_extra) = make_x11_driver($xine)) {
+    return $x11_driver, @x11_extra;
+  }
+  elsif (my $null_driver = make_null_driver($xine)) {
+    return $null_driver;
+  }
+  else {
+    die "Unable to create video driver";
+  }
+}
+
+sub make_x11_driver {
+    my ($xine) = @_;
+
+  if (! defined $ENV{'DISPLAY'}) {
+    warn "DISPLAY not set\n";
+    return;
+  }
+
+  eval { require X11::FullScreen; };
+  if ($@) {
+    warn("X11::FullScreen module not found\n");
+    return;
+  }
+
+  my $display_str = defined $ENV{'DISPLAY'} ? $ENV{'DISPLAY'} : ':0.0';
+
+  my $display = X11::FullScreen::Display->new($display_str)
+    or do {
+      warn("X11::FullScreen::Display does not initialize");
+      return;
+    };
+
+  my $window = $display->createWindow();
+  $display->sync();
+  my $x11_visual = Video::Xine::Util::make_x11_visual($display,
+						      $display->getDefaultScreen(),
+						      $window,
+						      $display->getWidth(),
+						      $display->getHeight(),
+						      $display->getPixelAspect()
+						     );
+
+  my $driver = Video::Xine::Driver::Video->new($xine,"auto", XINE_VISUAL_TYPE_X11, $x11_visual)
+    or return;
+
+  return ($driver, $window, $x11_visual, $display);
+}
+
+sub make_xine {
+  my %config = ();
+
+  if ( defined($config_file) && -e $config_file ) {
+    $config{'config_file'} = $config_file;
+  }
+
+  return Video::Xine->new( %config );
+
+}
+
+sub make_audio_driver {
+    my ($xine) = @_;
+
+    return Video::Xine::Driver::Audio->new($xine);
+}
+
+
+
+__END__
+
+=head1 NAME
+
+xine_play - Plays a movie using Xine
+
+=head1 SYNOPSIS
+
+   xine_play [options] [mrl]
+
+
+
+=head1 DESCRIPTION
+
+C<xine_play> will do its best to play the MRLs provided on the command
+line.
