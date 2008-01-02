@@ -1,1 +1,1 @@
-cpan2rpm --buildrequires 'xine-lib-devel' --requires 'xine-lib' --author='stephen@cpan.org' --version='0.07' .
+cpan2rpm --buildrequires 'xine-lib-devel, perl-Module-Build, perl-ExtUtils-CBuilder' --requires 'xine-lib' --author='stephen@cpan.org' --version='0.11' .
