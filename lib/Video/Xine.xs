@@ -58,6 +58,18 @@ static void unscaled_frame_output_cb (void *user_data,
 
 MODULE = Video::Xine		PACKAGE = Video::Xine
 
+#
+# Get the version for Xine
+#
+void
+xine_get_version(major, minor, sub)
+	int &major = NO_INIT
+	int &minor = NO_INIT
+	int &sub = NO_INIT
+    OUTPUT:
+	major
+	minor
+	sub
 
 #
 # Pre-init the xine engine. Need to call xine_init()

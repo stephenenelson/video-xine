@@ -7,7 +7,7 @@ use warnings;
 use Exporter;
 use Carp;
 
-our $VERSION = '0.10';
+our $VERSION = '0.11';
 our @ISA = qw(Exporter);
 our @EXPORT = qw(
   XINE_STATUS_IDLE
@@ -188,6 +188,14 @@ use constant {
   XINE_VISUAL_TYPE_MACOSX           => 9,
   XINE_VISUAL_TYPE_XCB              => 11
 };
+
+sub get_version {
+    my $type = shift;
+
+    my ($major, $minor, $sub);
+    xine_get_version($major, $minor, $sub);
+    return "$major.$minor.$sub";
+}
 
 sub new {
   my $type = shift;
@@ -472,7 +480,7 @@ Video::Xine - Perl interface to libxine
   my $video_driver = Video::Xine::Driver::Video->new($xine,"auto",1,$x11_visual);
 
   # Create a new stream (put your video driver under $DRIVER)
-  my $stream = $xine->stream_new(undef,$DRIVER);
+  my $stream = $xine->stream_new($AUDIO_DRIVER,$VIDEO_DRIVER);
 
   # Open a file on the stream
   $stream->open('file://my/movie/file.avi')
@@ -498,9 +506,11 @@ A perl interface to Xine, the Linux movie player. More properly, an
 interface to libxine, the development library. Requires installation of
 libxine.
 
-Xine by itself does not provide a user interface, and neither does
-this interface. Instead, you must set up the window using your own
-windowing code, and pass the window information to Xine.
+Xine by itself does not provide a user interface or windowing system,
+and neither does this interface. Instead, you must set up the window
+using your own windowing code, and pass the window information to
+Xine. The "X11::FullScreen" module provides a simple interface for
+doing this with X.
 
 
 =head2 METHODS
@@ -508,6 +518,19 @@ windowing code, and pass the window information to Xine.
 =head3 new()
 
 Constructor. Takes named argument 'config_file'.
+
+Example:
+
+  my $xine = Video::Xine->new( config_file => "$ENV{'HOME'}/xine/config" )
+
+=head3 get_version()
+
+Returns the version of the xine library to which we're linked. Static
+method.
+
+Example:
+
+ my $version = Video::Xine->get_version(); # returns something like '1.1.8'
 
 =head3 set_param()
 
