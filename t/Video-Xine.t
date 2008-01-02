@@ -3,11 +3,14 @@
 use strict;
 use warnings;
 use FindBin '$Bin';
-use Test::More tests => 11;
+use Test::More tests => 12;
 BEGIN { use_ok('Video::Xine') };
 
 #########################
 
+my $version = Video::Xine->get_version();
+like($version, qr/^\d+\.\d+\.\d+$/, 'Version is about right');
+diag("Xine-lib version: $version");
 
 my $xine = Video::Xine->new()
   or die "Couldn't initialize xine";
