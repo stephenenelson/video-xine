@@ -1,3 +1,12 @@
+2008-01-08  Stephen Nelson  <stephenenelson@mac.com>
+
+	* Bumped version to 0.11
+	* Added test for Xine version
+	* Added get_version()
+	* Fixed pass-through for audio driver in constructor
+	* Documentation updates
+	* Added xine_play
+
 2007-12-30  Stephen Nelson  <stephenenelson@mac.com> (0.10)
 	* (Remote debugging via CPANTESTS is fun!)
 	* Removed Makefile.PL from the distribution (for real this time)

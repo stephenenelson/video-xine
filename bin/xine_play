@@ -12,9 +12,17 @@ use Video::Xine;
 
 my $config_file = "$ENV{'HOME'}/.xine/config";
 my $loop = 0;
+my $null_video = 0;
+my $null_audio = 0;
+my $log_level = 0;
+my $broadcaster_port = 0;
 
 my $result = GetOptions('config=s' => \$config_file, 
-			'loop' => \$loop
+			'loop' => \$loop,
+			'no-video' => \$null_video,
+			'no-audio' => \$null_audio,
+			'verbosity=i' => \$log_level,
+			'broadcaster-port=i' => \$broadcaster_port
 		       )
   or pod2usage(2);
 
@@ -24,17 +32,21 @@ my @mrls = @ARGV;
 
 MAIN: {
   my $xine = make_xine();
+  $xine->set_param(XINE_ENGINE_PARAM_VERBOSITY, $log_level) if $log_level;
 
   my ($vo, @vo_additional) = make_video_driver($xine);
   my ($ao, @xo_additional) = make_audio_driver($xine);
 
   my $stream = $xine->stream_new($ao, $vo);
 
+  # Set the broadcaster port
+  $stream->set_param(16, $broadcaster_port);
+
   LOOP: while (1) {
       MRL: foreach my $mrl ( @mrls ) {
 	  $stream->open($mrl)
 	    or do {
-		print STDERR "Couldn't open '$mrl': ", $xine->get_error(), "\n";
+		print STDERR "Couldn't open '$mrl': ", $stream->get_error(), "\n";
 		next MRL;
 	    };
 	  $stream->play();
@@ -42,6 +54,7 @@ MAIN: {
 	      sleep(.1);
 	  }
       }
+	$stream->close();
 
 	$loop or last LOOP;
   }
@@ -51,10 +64,17 @@ MAIN: {
 
 }
 
+sub make_null_driver {
+    my ($xine) = @_;
+    return Video::Xine::Driver::Video->new($xine, 'none');
+}
+
 sub make_video_driver {
   my ($xine) = @_;
 
-  if (my ($x11_driver, @x11_extra) = make_x11_driver($xine)) {
+  if ((! $null_video )
+      && 
+      ( my ($x11_driver, @x11_extra) = make_x11_driver($xine) ) ) {
     return $x11_driver, @x11_extra;
   }
   elsif (my $null_driver = make_null_driver($xine)) {
@@ -117,7 +137,12 @@ sub make_xine {
 sub make_audio_driver {
     my ($xine) = @_;
 
-    return Video::Xine::Driver::Audio->new($xine);
+    if ($null_audio) {
+	return Video::Xine::Driver::Audio->new($xine, 'none')
+    }
+    else {
+	return Video::Xine::Driver::Audio->new($xine);
+    }
 }
 
 
@@ -130,11 +155,50 @@ xine_play - Plays a movie using Xine
 
 =head1 SYNOPSIS
 
-   xine_play [options] [mrl]
+xine_play [options] [mrl ...]
 
+  Options:
+    --config            Configuration file
+    --loop              Play the list of MRLs forever
+    --no-audio          Turn off audio play
+    --no-video          Turn off video play
+    --verbosity         Set verbosity level (0-2)
+    --broadcaster-port  Set the RTP broadcast port
 
+=head1 OPTIONS
+
+=over 8
+
+=item B<--config>
+
+Read Xine configuration from a particular file
+
+=item B<--loop>
+
+Keep replaying the URL list.
+
+=item B<--no-video>
+
+Sets the video driver to 'none', instead of the default X11 driver.
+
+=item B<--no-audio>
+
+Sets the audio driver to 'none', instead of choosing automatically.
+
+=item B<--verbosity>
+
+Set the verbosity level of the Xine engine output. The Xine engine log
+gets printed to STDOUT. Possible values are 0 (no output), 1 (log
+output), or 2 (debug output).
+
+=item B<--broadcaster-port>
+
+If set, Xine will attempt to open a port on which each stream will be
+broadcast.
+
+=back
 
 =head1 DESCRIPTION
 
 C<xine_play> will do its best to play the MRLs provided on the command
-line.
+line. See xine(5) for MRL syntax.

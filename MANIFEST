@@ -1,3 +1,4 @@
+bin/xine_play
 Build.PL
 ChangeLog
 inc/Devel/CheckLib.pm
@@ -5,6 +6,7 @@ lib/Video/ppport.h
 lib/Video/Xine.pm
 lib/Video/Xine.xs
 MANIFEST
+META.yml
 README
 t/Event.t
 t/test.ogg
@@ -13,4 +15,3 @@ t/time_015.avi
 t/Video-Xine.t
 t/X11.t
 typemap
-META.yml
