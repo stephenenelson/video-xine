@@ -5,6 +5,7 @@ inc/Devel/CheckLib.pm
 lib/Video/ppport.h
 lib/Video/Xine.pm
 lib/Video/Xine.xs
+Makefile.PL
 MANIFEST
 META.yml
 README

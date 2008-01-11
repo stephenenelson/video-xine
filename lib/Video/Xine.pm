@@ -7,7 +7,8 @@ use warnings;
 use Exporter;
 use Carp;
 
-our $VERSION = '0.11';
+our $VERSION = '0.12';
+
 our @ISA = qw(Exporter);
 our @EXPORT = qw(
   XINE_STATUS_IDLE

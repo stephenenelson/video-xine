@@ -6,7 +6,7 @@
 ^MANIFEST\.SKIP$
 .svn
 .project
-Makefile
+Makefile(\.old)?$
 notes
 tar.gz
 tar
