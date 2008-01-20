@@ -352,3 +352,45 @@ void
 xine_event_dispose_queue(queue)
 	xine_event_queue_t *queue
 	
+
+MODULE = Video::Xine  PACKAGE = Video::Xine::OSD
+
+xine_osd_t *
+xine_osd_new(xine,x,y,width,height)
+	xine_stream_t *xine
+	int x
+	int y
+	int width
+	int height
+
+void
+xine_osd_free(osd)
+	xine_osd_t *osd
+
+void
+xine_osd_draw_text(osd,x1,y1,text,color_base)
+	xine_osd_t *osd
+	int x1
+	int y1
+	const char *text
+	int color_base
+
+void
+xine_osd_show(osd,vpts)
+	xine_osd_t *osd
+	int vpts
+
+void
+xine_osd_hide(osd,vpts)
+	xine_osd_t *osd
+	int vpts
+
+int
+xine_osd_set_font(osd,fontname,size)
+	xine_osd_t *osd
+	const char *fontname
+	int size
+
+void
+xine_osd_clear(osd)
+	xine_osd_t *osd
