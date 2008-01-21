@@ -6,7 +6,6 @@ use FindBin '$Bin';
 
 use Test::More tests => 2;
 
-
 use Video::Xine;
 
 my $xine = Video::Xine->new();
@@ -39,7 +38,7 @@ if (defined($ENV{'VIDEO_XINE_SHOW'}) && $ENV{'VIDEO_XINE_SHOW'}) {
 					 $display->getHeight(),
 					 $display->getPixelAspect()
 					);
-    $driver = Video::Xine::Driver::Video->new($xine,"auto", 1, $x11_visual)
+    $driver = Video::Xine::Driver::Video->new($xine,"auto", 1, $x11_visual, $display)
       or skip("Unable to load video driver", 1);
 }
 else {
@@ -79,6 +78,3 @@ $osd->draw_text(x => 0, y => 0, text => q{How's it going?}, color_base => 0);
 $osd->show();
 sleep(2);
 
-# Avoid closing segfault (!)
-$audio_port = undef;
-$driver = undef;

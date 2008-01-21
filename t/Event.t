@@ -4,8 +4,9 @@ use warnings;
 use FindBin '$Bin';
 use Test::More tests => 1;
 use Video::Xine;
+use Video::Xine::Stream ':status_constants';
 
-our $DEBUG = 0;
+our $DEBUG = 1;
 
 SKIP: {
 
@@ -36,7 +37,7 @@ SKIP: {
 					 $display->getHeight(),
 					 $display->getPixelAspect()
 					);
-    $driver = Video::Xine::Driver::Video->new($xine,"auto", 1, $x11_visual)
+    $driver = Video::Xine::Driver::Video->new($xine,"auto", 1, $x11_visual, $display)
 	or skip("Unable to load video driver", 1);
   }
   else {
@@ -66,9 +67,6 @@ SKIP: {
 
   ok(1);
 
-  # Avoid closing segfault (!)
-  $null_audio = undef;
-  $driver = undef;
 }
 
 

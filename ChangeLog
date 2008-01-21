@@ -1,4 +1,9 @@
 2008-01-20  Stephen Nelson  <stephenenelson@mac.com>
+	* Bumped version to 0.14
+	* Split out Perl modules into separate pm files
+	* Eliminated segfault on closing tests
+
+2008-01-20  Stephen Nelson  <stephenenelson@mac.com>
 
 	* Bumped version to 0.13
 	* (Lost changelog for 0.12!)

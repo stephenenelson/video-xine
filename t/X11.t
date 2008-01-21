@@ -5,9 +5,8 @@ use FindBin '$Bin';
 use Test::More tests => 1;
 
 use Video::Xine;
+use Video::Xine::Driver::Video ':constants';
 if ($@) { skip_all(); }
-
-
 
 my $xine = Video::Xine->new(config_file => "$Bin/test_config");
 
