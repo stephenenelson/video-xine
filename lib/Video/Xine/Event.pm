@@ -21,7 +21,7 @@ our @EXPORT_OK = qw(
   XINE_EVENT_DROPPED_FRAMES
 );
 
-our %EVENT_TAGS = 
+our %EXPORT_TAGS = 
   (
    type_constants => 
    [

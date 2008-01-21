@@ -5,6 +5,7 @@ use FindBin '$Bin';
 use Test::More tests => 1;
 use Video::Xine;
 use Video::Xine::Stream ':status_constants';
+use Video::Xine::Event ':type_constants';
 
 our $DEBUG = 1;
 
@@ -60,7 +61,7 @@ SKIP: {
     while ( my $event = $queue->get_event() ) {
       print "Event: ", $event->get_type(), "\n"
 	if $DEBUG;
-      $event->get_type() == 1 and last PLAY;
+      $event->get_type() == XINE_EVENT_UI_PLAYBACK_FINISHED and last PLAY;
     }
     sleep(1);
   }
