@@ -347,6 +347,9 @@ xine_event_get(queue)
 			XSRETURN_UNDEF;
 		}
 
+xine_event_t *
+xine_event_wait(queue)
+	xine_event_queue_t *queue
 
 void
 xine_event_dispose_queue(queue)
