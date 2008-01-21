@@ -5,6 +5,7 @@
 \.bak$
 ^MANIFEST\.SKIP$
 .svn
+svn-commit.*
 .project
 Makefile(\.old)?$
 notes
