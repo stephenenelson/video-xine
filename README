@@ -1,8 +1,11 @@
-Video-Xine version 0.04
+Video-Xine version 0.14
 =======================
 
 This is an interface to the xine-lib library. It can be used to create
-a Perl-controlled instance of Xine.
+a Perl-controlled instance of Xine. 
+
+Xine is a multimedia playback system. You can find more information
+about it at http://www.xinehq.de.
 
 INSTALLATION
 
@@ -17,7 +20,7 @@ DEPENDENCIES
 
 This module requires these other modules and libraries:
 
-  xine-lib, available from http://xinehq.de
+  xine-lib, available from http://www.xinehq.de
   Module::Build
   Test::More
 
