@@ -4,9 +4,10 @@ use warnings;
 
 use FindBin '$Bin';
 
-use Test::More tests => 2;
+use Test::More tests => 8;
 
 use Video::Xine;
+use Video::Xine::OSD qw/:cap_constants/;
 
 my $xine = Video::Xine->new();
 $xine->set_param(XINE_ENGINE_PARAM_VERBOSITY, 2);
@@ -59,22 +60,37 @@ my $osd = Video::Xine::OSD->new
 
 ok(1);
 
+my $caps = $osd->get_capabilities();
+( $caps & XINE_OSD_CAP_FREETYPE2 ) and diag("Has freetype2");
+( $caps & XINE_OSD_CAP_FREETYPE2 ) and diag("Can do unscaled OSD");
+
+ok(1);
+
 $stream->open("$Bin/time_015.avi")
   or die "Couldn't open '$Bin/time_015.avi'";
 
 $stream->play();
-$osd->set_font('serif', 66);
-$osd->draw_text(x => 5, y => 10, text => "Hello there!", color_base => 0);
-sleep(1);
-$osd->show(0);
-sleep(2);
-$osd->hide(0);
-sleep(2);
 
-ok(1);
 
-$osd->clear();
-$osd->draw_text(x => 0, y => 0, text => q{How's it going?}, color_base => 0);
-$osd->show();
-sleep(2);
+# Skip rest of tests if we can't set the font
+SKIP: {
+    $osd->set_font('serif', 66)
+      or skip(5, "Unable to set font");
+    ok(1, "Set font");
+    $osd->draw_text(x => 5, y => 10, text => "Hello there!", color_base => 0);
+    ok(1, "draw text");
+    sleep(1);
+    $osd->show(0);
+    ok(1, "show");
+    sleep(2);
+    $osd->hide(0);
+    ok(1, "hide");
+    sleep(2);
 
+    $osd->clear();
+    ok(1, "clear");
+    $osd->draw_text(x => 0, y => 0, text => q{How's it going?}, color_base => 0);
+    ok(1, "draw_text 2");
+    $osd->show();
+    sleep(2);
+}
