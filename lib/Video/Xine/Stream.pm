@@ -276,7 +276,7 @@ __END__
 
 =head1 NAME
 
-Video::Xine::Stream
+Video::Xine::Stream - Audio-video stream for Xine
 
 =head1 METHODS
 
