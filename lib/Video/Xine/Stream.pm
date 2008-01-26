@@ -499,13 +499,145 @@ XINE_STATUS_QUIT
   $s->set_param($param, $value)
 
 Sets a parameter on the stream. C<$param> should be a xine parameter
-constant. See xine.h for details.
+constant. See L<"PARAMETER CONSTANTS"> for a list of available
+parameter constants.
 
 =head3 get_param()
 
-  $s->get_param($param)
+  my $param = $s->get_param($param)
 
 Returns a parameter from the stream. C<$param> should be a xine
 parameter constant.
+
+=head3 get_info($param)
+
+Returns information about the stream, such as its bit rate, audio
+channels, width, or height. C<$param> should be a xine info constant.
+
+=head2
+
+=over
+
+=item *
+
+XINE_PARAM_SPEED
+
+=item *
+
+XINE_PARAM_AV_OFFSET
+
+=item *
+
+XINE_PARAM_AUDIO_CHANNEL_LOGICAL
+
+=item *
+
+XINE_PARAM_SPU_CHANNEL
+
+=item *
+
+XINE_PARAM_VIDEO_CHANNEL
+
+=item *
+
+XINE_PARAM_AUDIO_VOLUME
+
+=item *
+
+XINE_PARAM_AUDIO_MUTE
+
+=item *
+
+XINE_PARAM_AUDIO_COMPR_LEVEL
+
+=item *
+
+XINE_PARAM_AUDIO_AMP_LEVEL
+
+=item *
+
+XINE_PARAM_AUDIO_REPORT_LEVEL
+
+=item *
+
+XINE_PARAM_VERBOSITY
+
+=item *
+
+XINE_PARAM_SPU_OFFSET
+
+=item *
+
+XINE_PARAM_IGNORE_VIDEO
+
+=item *
+
+XINE_PARAM_IGNORE_AUDIO
+
+=item *
+
+XINE_PARAM_IGNORE_SPU
+
+=item *
+
+XINE_PARAM_BROADCASTER_PORT
+
+=item *
+
+XINE_PARAM_METRONOM_PREBUFFER
+
+=item *
+
+XINE_PARAM_EQ_30HZ
+
+=item *
+
+XINE_PARAM_EQ_60HZ
+
+=item *
+
+XINE_PARAM_EQ_125HZ
+
+=item *
+
+XINE_PARAM_EQ_250HZ
+
+=item *
+
+XINE_PARAM_EQ_500HZ
+
+=item *
+
+XINE_PARAM_EQ_1000HZ
+
+=item *
+
+XINE_PARAM_EQ_2000HZ
+
+=item *
+
+XINE_PARAM_EQ_4000HZ
+
+=item *
+
+XINE_PARAM_EQ_8000HZ
+
+=item *
+
+XINE_PARAM_EQ_16000HZ
+
+=item *
+
+XINE_PARAM_AUDIO_CLOSE_DEVICE
+
+=item *
+
+XINE_PARAM_AUDIO_AMP_MUTE
+
+=item *
+
+XINE_PARAM_FINE_SPEED
+
+=back
 
 =cut
