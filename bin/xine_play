@@ -9,6 +9,10 @@ use Getopt::Long;
 eval "use Time::HiRes 'sleep'";
 
 use Video::Xine;
+use Video::Xine::Stream qw/:status_constants/;
+use Video::Xine::Driver::Video qw/:constants/;
+use Video::Xine::Event qw/:type_constants/;
+use Video::Xine::Event::Queue;
 
 my $config_file = "$ENV{'HOME'}/.xine/config";
 my $loop = 0;
@@ -42,6 +46,9 @@ MAIN: {
   # Set the broadcaster port
   $stream->set_param(16, $broadcaster_port);
 
+  # Set up the event queue
+  my $queue = Video::Xine::Event::Queue->new($stream);
+
   LOOP: while (1) {
       MRL: foreach my $mrl ( @mrls ) {
 	  $stream->open($mrl)
@@ -51,7 +58,7 @@ MAIN: {
 	    };
 	  $stream->play();
 	  while ( $stream->get_status() == XINE_STATUS_PLAY) {
-	      sleep(.1);
+	      my $event = $queue->wait_event();
 	  }
       }
 	$stream->close();
@@ -117,7 +124,7 @@ sub make_x11_driver {
 						      $display->getPixelAspect()
 						     );
 
-  my $driver = Video::Xine::Driver::Video->new($xine,"auto", XINE_VISUAL_TYPE_X11, $x11_visual)
+  my $driver = Video::Xine::Driver::Video->new($xine,"auto", XINE_VISUAL_TYPE_X11, $x11_visual, $display)
     or return;
 
   return ($driver, $window, $x11_visual, $display);
