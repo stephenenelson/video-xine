@@ -1,0 +1,83 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+use Getopt::Long;
+use Pod::Usage;
+
+use Video::Xine;
+use Video::Xine::Stream qw/:status_constants/;
+use Video::Xine::Driver::Video qw/:constants/;
+use Video::Xine::Driver::Audio;
+
+my $log_level = 0;
+
+my $result = GetOptions('verbosity=s' => \$log_level)
+  or pod2usage(2);
+
+
+
+pod2usage("$: No MRL specified.\n") if (@ARGV < 1);
+
+my ($mrl) = @ARGV;
+
+MAIN: {
+    my $xine = Video::Xine->new();
+    $xine->set_param(XINE_ENGINE_PARAM_VERBOSITY, $log_level);
+
+    my $vo = Video::Xine::Driver::Video->new($xine, 'none');
+    my $ao = Video::Xine::Driver::Audio->new($xine, 'none');
+    
+    my $stream = $xine->stream_new($ao, $vo);
+
+    $stream->open($mrl)
+      or die "Couldn't open mrl '$mrl': Xine error " . $stream->get_error() . "\n";
+
+    $stream->play();
+
+    my (undef, undef, $length) = $stream->get_pos_length();
+
+    $stream->stop();
+
+    print "$mrl length: $length milliseconds\n";
+
+}
+
+__END__
+
+=head1 NAME
+
+xine_length - Gets the length of an MRL using Xine
+
+=head1 SYNOPSIS
+
+xine_length [options] [mrl]
+
+  Options:
+   --verbosity    Set verbosity level (0-2)
+
+=head1 OPTIONS
+
+=over 8
+
+=item B<--verbosity>
+
+Set the verbosity level of the Xine engine output. The Xine engine log
+gets printed to STDOUT. Possible values are 0 (no output), 1 (log
+output), or 2 (debug output).
+
+
+=back
+
+
+
+=back
+
+
+
+
+=back
+
+=cut
+
