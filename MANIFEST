@@ -1,3 +1,4 @@
+bin/xine_length
 bin/xine_play
 Build.PL
 ChangeLog
@@ -18,6 +19,7 @@ META.yml
 README
 t/Event.t
 t/osd.t
+t/stream.t
 t/test.ogg
 t/test_config
 t/time_015.avi
