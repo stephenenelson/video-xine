@@ -20,13 +20,15 @@ my $null_video = 0;
 my $null_audio = 0;
 my $log_level = 0;
 my $broadcaster_port = 0;
+my $event_wait = 1;
 
 my $result = GetOptions('config=s' => \$config_file, 
 			'loop' => \$loop,
 			'no-video' => \$null_video,
 			'no-audio' => \$null_audio,
 			'verbosity=i' => \$log_level,
-			'broadcaster-port=i' => \$broadcaster_port
+			'broadcaster-port=i' => \$broadcaster_port,
+			'event-wait' => \$event_wait
 		       )
   or pod2usage(2);
 
@@ -58,7 +60,14 @@ MAIN: {
 	    };
 	  $stream->play();
 	  while ( $stream->get_status() == XINE_STATUS_PLAY) {
-	      my $event = $queue->wait_event();
+	      my $event;
+	      if ($event_wait) {
+		  $event = $queue->wait_event();
+	      }
+	      else {
+		  $event = $queue->get_event()
+		    or sleep .1;
+	      }
 	  }
       }
 	$stream->close();
