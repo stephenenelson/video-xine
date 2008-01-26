@@ -1,9 +1,8 @@
 package Video::Xine::Utility;
 
-# Utility functions for Xine. Really just here for documentation.
+use Video::Xine;
 
-require XSLoader;
-XSLoader::load('Video::Xine');
+# Utility functions for Xine. Really just here for documentation.
 
 1;
 

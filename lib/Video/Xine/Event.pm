@@ -59,9 +59,6 @@ use constant {
 
 use Video::Xine;
 
-require XSLoader;
-XSLoader::load('Video::Xine');
-
 sub get_type {
   xine_event_get_type($_[0]);
 }
