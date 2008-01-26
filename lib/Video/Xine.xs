@@ -219,10 +219,21 @@ xine_set_param(self, param, value)
         int param;
         int value;
 
+#
+# Get stream information
+#
+U32
+xine_get_stream_info(stream,info)
+	xine_stream_t *stream
+	int info
+
 # Destroy all monsters
 void
 xine_dispose(self)
 	xine_stream_t *self
+
+
+
 
 MODULE = Video::Xine		PACKAGE = Video::Xine::Driver::Audio
 
@@ -396,4 +407,8 @@ xine_osd_set_font(osd,fontname,size)
 
 void
 xine_osd_clear(osd)
+	xine_osd_t *osd
+
+U32
+xine_osd_get_capabilities(osd)
 	xine_osd_t *osd
