@@ -2,9 +2,6 @@ package Video::Xine::Driver::Audio;
 
 use Video::Xine;
 
-require XSLoader;
-XSLoader::load('Video::Xine');
-
 sub new {
   my $type = shift;
   my ($xine, $id, $data) = @_;
