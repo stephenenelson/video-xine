@@ -55,8 +55,6 @@ use constant {
     XINE_VISUAL_TYPE_XCB     => 11
 };
 
-require XSLoader;
-XSLoader::load('Video::Xine');
 
 use Carp;
 
@@ -115,11 +113,17 @@ __END__
 
 Video::Xine::Driver::Video - Video driver class for Xine
 
+=head1 SYNOPSIS
+
+  use Video::Xine::Driver::Video qw/:constants/;
+
+  my $driver =   Video::Xine::Driver::Video->new($xine, $id, $visual, $data, $display)
+
 =head1 METHODS
 
 =head3 new()
 
-  Video::Xine::Driver::Video->new($xine, $id, $visual, $data)
+  Video::Xine::Driver::Video->new($xine, $id, $visual, $data, $display)
 
 Returns a video driver which can be used to open streams. C<id>,
 C<$visual>, and C<$data> are optional. If C<$id> is undefined, returns
@@ -132,6 +136,9 @@ C<$data> is an opaque value dependent on the visual type. For
 XINE_VISUAL_TYPE_X11, C<$data> is of type C<x11_visual_type>, a C
 struct which should be created with with the method
 C<Video::Xine::Util::make_x11_visual()>.
+
+C<$display> is an optional argument for anything that you do not wish
+to fall out of scope so long as the driver is alive.
 
 Example:
 
@@ -146,7 +153,7 @@ Example:
       $display->getPixelAspect()
      );
   my $driver = Video::Xine::Driver::Video->new
-     ($xine,"Xv",XINE_VISUAL_TYPE_X11, $x11_visual)
+     ($xine,"Xv",XINE_VISUAL_TYPE_X11, $x11_visual, $display)
     or die "Couldn't load video driver";
 
 =head4 VIDEO DRIVER CONSTANTS
