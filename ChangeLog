@@ -1,3 +1,16 @@
+2008-01-26  Stephen Nelson  <stephenenelson@mac.com>
+
+	* Version 0.15
+	* Removed redundant XSLoader calls which caused a bunch of "redefined" warnings.
+	* Updated xine_play and made it use wait_event
+	* Added wait_event and get_info to stream
+	* Added get_capabilities and caps constants to OSD
+	* Made OSD give a number of subtests in hopes of tracing the dying OSD issue on some boxes
+	* Added test for stream
+	* Documented param constants in stream
+	* Added (but as yet didn't document) info constants for stream
+	* Added xine_length script as a quick way of getting length of an MRL
+
 2008-01-20  Stephen Nelson  <stephenenelson@mac.com>
 	* Bumped version to 0.14
 	* Split out Perl modules into separate pm files
