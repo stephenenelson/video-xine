@@ -514,7 +514,9 @@ parameter constant.
 Returns information about the stream, such as its bit rate, audio
 channels, width, or height. C<$param> should be a xine info constant.
 
-=head2
+=head2 PARAM CONSTANTS
+
+These constants are exported with the C<:param_constants> tag.
 
 =over
 
