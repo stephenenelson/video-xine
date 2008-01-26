@@ -1,6 +1,28 @@
 package Video::Xine::OSD;
 
+use strict;
+use warnings;
+
+use Video::Xine;
+
 use Carp;
+use Exporter;
+our @ISA = qw/Exporter/;
+
+our @EXPORT_OK = qw(
+    XINE_OSD_CAP_FREETYPE2
+    XINE_OSD_CAP_UNSCALED
+);
+
+our %EXPORT_TAGS = (
+    cap_constants => [ qw/XINE_OSD_CAP_UNSCALED XINE_OSD_CAP_FREETYPE2/ ]
+);
+
+use constant {
+    XINE_OSD_CAP_FREETYPE2 => 0x0001,
+    XINE_OSD_CAP_UNSCALED => 0x0002
+};
+
 
 sub new {
     my ($type) = shift;
@@ -32,6 +54,12 @@ sub clear {
     xine_osd_clear($self->{'osd'});
 }
 
+sub get_capabilities {
+    my $self = shift;
+
+    return xine_osd_get_capabilities($self->{'osd'});
+}
+
 sub draw_text {
     my $self = shift;
     my (%in) = @_;
@@ -43,7 +71,7 @@ sub set_font {
     my $self = shift;
     my ($fontname, $fontsize) = @_;
 
-    xine_osd_set_font($self->{'osd'}, $fontname, $fontsize)
+    return xine_osd_set_font($self->{'osd'}, $fontname, $fontsize);
 }
 
 sub show {
@@ -81,6 +109,15 @@ These methods are used for the Xine on-screen display.
 
 Creates a new OSD.
 
+=head3 get_capabilities()
+
+  my $caps = $osd->get_capabilities();
+  print "Got freetype2" if ($caps & XINE_OSD_CAP_FREETYPE2);
+
+Returns a number indicating the OSD's capabilities as flags. Import
+the C<:cap_constants> tag to get the flag constants. See L<EXPORTS>
+for details.
+
 =head3 clear()
 
  $osd->clear()
@@ -103,6 +140,8 @@ name or a path to a TrueType font file. C<$font_size> is the point
 size of the font. The Xine header seems to want you to make this a
 multiple of 11; not sure why.
 
+Returns true on success, false on failure.
+
 =head3 show()
 
  $osd->show();
@@ -114,5 +153,25 @@ Renders the OSD onto the screen.
  $osd->hide();
 
 Hides the OSD from the screen.
+
+=head1 EXPORTS
+
+None by default.
+
+=head1 Capabilities Constants
+
+The tag C<:cap_constants> exports constants for OSD capabilities for use with the get_capabilities() method:
+
+=over
+
+=item *
+
+XINE_OSD_CAP_FREETYPE2
+
+=item *
+
+XINE_OSD_CAP_UNSCALED
+
+=back
 
 =cut
