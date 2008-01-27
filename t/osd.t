@@ -11,7 +11,6 @@ use Video::Xine::OSD qw/:cap_constants/;
 
 TEST: {
     my $xine = Video::Xine->new();
-    $xine->set_param( XINE_ENGINE_PARAM_VERBOSITY, 2 );
     my $audio_port = Video::Xine::Driver::Audio->new( $xine, 'none' );
 
     my $driver = make_vo($xine);
@@ -42,7 +41,7 @@ TEST: {
     # Skip rest of tests if we can't set the font
   SKIP: {
         $osd->set_font( 'serif', 66 )
-          or skip( 5, "Unable to set font" );
+          or skip( "Unable to set font", 6 );
         ok( 1, "Set font" );
         $osd->draw_text(
             x          => 5,
@@ -69,7 +68,6 @@ TEST: {
         );
         ok( 1, "draw_text 2" );
         $osd->show();
-        sleep(2);
     }
 }
 
@@ -119,5 +117,4 @@ sub make_x11_vo {
       };
 
     return $driver;
-
 }
