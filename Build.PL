@@ -34,11 +34,13 @@ my $build = Module::Build->new(
 			       requires => {
 					    'Module::Build' => '0',
 					    'Test::More' => '0.01',
-					    'ExtUtils::CBuilder' => '0'
+					    'ExtUtils::CBuilder' => '0',
+					    'DateTime' => '0'
 					   },
 			       recommends => {
 					      'X11::FullScreen' => '0',
-					      'perl' => '5.8.5'
+					      'perl' => '5.8.5',
+					      'DateTime::Format::Duration' => 0
 					     },
 			      );
 
