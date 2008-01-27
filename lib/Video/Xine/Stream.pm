@@ -2,6 +2,8 @@ package Video::Xine::Stream;
 
 use Video::Xine;
 
+use DateTime;
+
 use base 'Exporter';
 
 our @EXPORT_OK = qw/
@@ -348,6 +350,18 @@ sub get_pos_length {
       or return;
 
     return ( $pos_stream, $pos_time, $length_time );
+}
+
+sub get_duration {
+    my $self = shift;
+
+    my (undef, undef, $msec_dur) = $self->get_pos_length();
+
+    my $secs = int($msec_dur / 1000);
+
+    my $millis = $msec_dur % 1000;
+
+    return DateTime::Duration->new( seconds => $secs, nanoseconds => ($millis * 1000) );
 }
 
 sub get_status {
