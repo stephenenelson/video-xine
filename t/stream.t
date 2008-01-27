@@ -2,7 +2,7 @@ use strict;
 use warnings;
 
 use FindBin '$Bin';
-use Test::More tests => 5;
+use Test::More tests => 7;
 
 use Video::Xine;
 use Video::Xine::Stream qw/:status_constants :info_constants/;
@@ -19,6 +19,11 @@ my $ao = Video::Xine::Driver::Audio->new($xine, 'none')
 my $stream = $xine->stream_new($ao);
 
 $stream->open("$Bin/time_015.avi");
+
+my $duration = $stream->get_duration();
+
+is($duration->seconds(), 14);
+is($duration->nanoseconds(), 981000);
 
 is($stream->get_info(XINE_STREAM_INFO_BITRATE), 0);
 is($stream->get_info(XINE_STREAM_INFO_FRAME_DURATION), 3003);
