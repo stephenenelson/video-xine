@@ -53,7 +53,7 @@ sub format_duration {
 
     if ($@) {
 	warn "Couldn't use DateTime::Format::Duration: $@\n";
-	return ( $duration->nanoseconds() ) . " nanoseconds";
+	return ( $duration->seconds() . " seconds " . $duration->nanoseconds() . " nanoseconds" );
     }
     else {
 	my $fmt = DateTime::Format::Duration->new( pattern => $Duration_Format );
