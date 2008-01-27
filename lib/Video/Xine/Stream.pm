@@ -379,11 +379,11 @@ sub get_info {
     return xine_get_stream_info( $self->{'stream'}, $info );
 }
 
-sub get_metainfo {
+sub get_meta_info {
     my $self = shift;
     my ($info) = @_;
 
-    return xine_get_stream_meta_info( $self->{'stream'}, $info);
+    return xine_get_meta_info( $self->{'stream'}, $info);
 
 }
 

@@ -2,7 +2,7 @@ use strict;
 use warnings;
 
 use FindBin '$Bin';
-use Test::More tests => 4;
+use Test::More tests => 5;
 
 use Video::Xine;
 use Video::Xine::Stream qw/:status_constants :info_constants/;
@@ -24,3 +24,11 @@ is($stream->get_info(XINE_STREAM_INFO_BITRATE), 0);
 is($stream->get_info(XINE_STREAM_INFO_FRAME_DURATION), 3003);
 is($stream->get_info(XINE_STREAM_INFO_VIDEO_WIDTH), 704);
 is($stream->get_info(XINE_STREAM_INFO_VIDEO_HEIGHT), 480);
+
+$stream->close();
+
+$stream->open("$Bin/test.ogg");
+
+is($stream->get_meta_info(0), "Test of Perl Xine" );
+
+$stream->close();
