@@ -1,3 +1,14 @@
+2008-01-27  Stephen Nelson  <stephenenelson@mac.com>
+
+	* Version 0.16
+	* Fixed failing test in osd.t
+	* Added some tags to test.ogg to test get_meta_info
+	* Added get_meta_info to stream
+	* Documented info constants
+	* Added and documented meta constants to stream
+	* Added get_duration(), which requires DateTime::Duration
+	* Added duration formatting to xine_length
+
 2008-01-26  Stephen Nelson  <stephenenelson@mac.com>
 
 	* Version 0.15
