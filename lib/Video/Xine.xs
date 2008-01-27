@@ -227,6 +227,15 @@ xine_get_stream_info(stream,info)
 	xine_stream_t *stream
 	int info
 
+#
+# Get stream metainformation
+#
+const char *
+xine_get_meta_info(stream,info)
+	xine_stream_t *stream
+	int info
+
+
 # Destroy all monsters
 void
 xine_dispose(self)

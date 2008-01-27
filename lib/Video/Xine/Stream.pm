@@ -379,6 +379,14 @@ sub get_info {
     return xine_get_stream_info( $self->{'stream'}, $info );
 }
 
+sub get_metainfo {
+    my $self = shift;
+    my ($info) = @_;
+
+    return xine_get_stream_meta_info( $self->{'stream'}, $info);
+
+}
+
 sub osd_new {
     my $self = shift;
     my (%in) = @_;
