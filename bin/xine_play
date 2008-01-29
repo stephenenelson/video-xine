@@ -9,7 +9,7 @@ use Getopt::Long;
 eval "use Time::HiRes 'sleep'";
 
 use Video::Xine;
-use Video::Xine::Stream qw/:status_constants/;
+use Video::Xine::Stream qw/:status_constants :info_constants/;
 use Video::Xine::Driver::Video qw/:constants/;
 use Video::Xine::Event qw/:type_constants/;
 use Video::Xine::Event::Queue;
@@ -21,14 +21,17 @@ my $null_audio = 0;
 my $log_level = 0;
 my $broadcaster_port = 0;
 my $event_wait = 1;
+my $frame_report = 0;
 
 my $result = GetOptions('config=s' => \$config_file, 
-			'loop' => \$loop,
+			'loop!' => \$loop,
 			'no-video' => \$null_video,
 			'no-audio' => \$null_audio,
 			'verbosity=i' => \$log_level,
 			'broadcaster-port=i' => \$broadcaster_port,
-			'event-wait' => \$event_wait
+			'event-wait!' => \$event_wait,
+			'frame-report!' => \$frame_report
+			
 		       )
   or pod2usage(2);
 
@@ -59,24 +62,55 @@ MAIN: {
 		next MRL;
 	    };
 	  $stream->play();
-	  while ( $stream->get_status() == XINE_STATUS_PLAY) {
-	      my $event;
-	      if ($event_wait) {
-		  $event = $queue->wait_event();
-	      }
-	      else {
-		  $event = $queue->get_event()
-		    or sleep .1;
+	  EVENTLOOP: while ( 1 ) {
+	      my $event = wait_for_event($queue);
+	      if ($event->get_type() == XINE_EVENT_UI_PLAYBACK_FINISHED ) {
+		  last EVENTLOOP;
 	      }
 	  }
-      }
-	$stream->close();
+	  
+	  if ($frame_report) {
+	      report_frames($mrl, $stream);
+	  }
 
-	$loop or last LOOP;
-  }
-  
-  $vo = undef;
-  $ao = undef;
+	  $stream->close();
+	  
+	  $loop or last LOOP;
+      }
+	
+	$vo = undef;
+	$ao = undef;
+	
+    }
+}
+
+sub report_frames {
+    my ($mrl, $stream) = @_;
+
+    print "'$mrl': ",
+      $stream->get_info(XINE_STREAM_INFO_SKIPPED_FRAMES), " skipped, ",
+	$stream->get_info(XINE_STREAM_INFO_DISCARDED_FRAMES), " discarded",
+	"\n";
+    
+}
+
+sub wait_for_event {
+    my ($queue) = @_;
+
+    if ($event_wait) {
+	return $queue->wait_event();
+    }
+    else {
+	while ( 1 ) {
+	    my $event = $queue->get_event();
+	    if (defined $event) {
+		return $event;
+	    }
+	    else {
+		sleep 1;
+	    }
+	}
+    }
 
 }
 
@@ -180,6 +214,8 @@ xine_play [options] [mrl ...]
     --no-video          Turn off video play
     --verbosity         Set verbosity level (0-2)
     --broadcaster-port  Set the RTP broadcast port
+    --event-wait        Use event-wait (not event-get) to get events
+    --frame-report      Print out discarded and skipped frames after each event
 
 =head1 OPTIONS
 
@@ -211,6 +247,16 @@ output), or 2 (debug output).
 
 If set, Xine will attempt to open a port on which each stream will be
 broadcast.
+
+=item B<--event-wait>
+
+Causes C<xine_play> to use the less skippy "event-wait" method of
+getting events.
+
+=item B<--frame-report>
+
+Causes C<xine_play> to print out how many skipped or discarded frames
+we had after each MRL.
 
 =back
 
