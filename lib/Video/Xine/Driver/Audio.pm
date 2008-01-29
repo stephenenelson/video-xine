@@ -38,6 +38,13 @@ __END__
 
 Video::Xine::Driver::Audio - Audio port for Xine
 
+=head1 SYNOPSIS
+
+  use Video::Xine::Driver::Audio;
+
+  my $ao = Video::Xine::Driver::Audio->new($xine, 'auto')
+    or die "Couldn't load audio driver!";
+
 =head1 DESCRIPTION
 
 Audio port for Xine.
