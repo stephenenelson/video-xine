@@ -151,10 +151,32 @@ xine_open(stream,mrl)
 ## Play the stream
 ##
 int
-xine_play(stream,start_pos=0,start_time=0)
+xine_play(stream, ...)
 	xine_stream_t *stream
-	int start_pos
-	int start_time
+    PREINIT:
+	int start_pos;
+	int start_time;
+
+    CODE:
+	if (items >= 2 && SvOK(ST(2)) ) {
+	   start_pos = SvIV(ST(2));
+	}
+        else {
+           start_pos = 0;
+        }
+        if (items >= 3 && SvOK(ST(3)) ) {
+           start_time = SvIV(ST(3));
+        }
+        else {
+           start_time = 0;
+        }
+        RETVAL = xine_play(stream, start_pos, start_time);
+	if (RETVAL == 0) {
+	    XSRETURN_UNDEF;
+	}
+
+    OUTPUT:
+        RETVAL
 
 ##
 ## Stop playing

@@ -358,12 +358,6 @@ sub play {
     my $self = shift;
     my ( $start_pos, $start_time ) = @_;
 
-    defined $start_pos
-      or $start_pos = 0;
-
-    defined $start_time
-      or $start_time = 0;
-
     xine_play( $self->{'stream'}, $start_pos, $start_time )
       or return;
 }
