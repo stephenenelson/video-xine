@@ -1,4 +1,4 @@
-package Video::Xine::Utility;
+package Video::Xine::Util;
 
 use Video::Xine;
 
@@ -10,13 +10,13 @@ __END__
 
 =head1 NAME
 
-Video::Xine::Utility -- Utility methods for Xine
+Video::Xine::Util -- Utility methods for Xine
 
 =head1 SYNOPSIS
 
-  use Video::Xine::Utility;
+  use Video::Xine::Util;
 
-  my $visual = Video::Xine::Utility::make_x11_visual
+  my $visual = Video::Xine::Util::make_x11_visual
                 (
                   $x_display,
                   $screen,
