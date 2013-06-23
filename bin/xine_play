@@ -13,6 +13,7 @@ use Video::Xine::Stream qw/:status_constants :info_constants/;
 use Video::Xine::Driver::Video qw/:constants/;
 use Video::Xine::Event qw/:type_constants/;
 use Video::Xine::Event::Queue;
+use Video::Xine::Util;
 
 my $config_file      = "$ENV{'HOME'}/.xine/config";
 my $loop             = 0;
@@ -161,10 +162,7 @@ sub make_x11_driver {
     my $window = $display->createWindow();
     $display->sync();
     my $x11_visual =
-      Video::Xine::Util::make_x11_visual( $display,
-        $display->getDefaultScreen(),
-        $window, $display->getWidth(), $display->getHeight(),
-        $display->getPixelAspect() );
+      Video::Xine::Util::make_x11_fs_visual( $display, $window );
 
     my $driver =
       Video::Xine::Driver::Video->new( $xine, "auto", XINE_VISUAL_TYPE_X11,
