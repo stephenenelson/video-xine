@@ -12,9 +12,7 @@ lib/Video/Xine/Event/Queue.pm
 lib/Video/Xine/OSD.pm
 lib/Video/Xine/Stream.pm
 lib/Video/Xine/Utility.pm
-Makefile.PL
 MANIFEST
-META.yml
 README
 t/Event.t
 t/osd.t
