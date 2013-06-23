@@ -3,6 +3,7 @@ use warnings;
 
 use Module::Build;
 use Config;
+use ExtUtils::PkgConfig;
 
 ### Based on Build.PL for Image::Imlib2
 if (! $Config{'usethreads'}) {
@@ -11,31 +12,19 @@ if (! $Config{'usethreads'}) {
 }
 
 # We need to find xine-config
-my $CONFIG = "xine-config";
-
-my $version = `$CONFIG --version`;
-if (!$version) {
-  warn 'You must install the xine libraries (including development files) before you can install Video::Xine. You can obtain libxine from
-http://www.xinehq.de/
-
-Otherwise, if you have installed xine-lib and development libraries, modify the $CONFIG variable inside Build.PL to point to the xine-config program, or otherwise ensure that it is in your path.';
-  exit(0);
-}
-
-my $libs = `$CONFIG --libs`;
-my $cflags = `$CONFIG --cflags`;
-
+my %xine_config = ExtUtils::PkgConfig->find('libxine');
 
 my $build = Module::Build->new(
-			       extra_compiler_flags => $cflags,
-			       extra_linker_flags => $libs,
+			       extra_compiler_flags => $xine_config{'cflags'},
+			       extra_linker_flags => $xine_config{'libs'},
 			       license => 'perl',
 			       module_name => 'Video::Xine',
 			       requires => {
 					    'Module::Build' => '0',
 					    'Test::More' => '0.01',
 					    'ExtUtils::CBuilder' => '0',
-					    'DateTime' => '0'
+					    'DateTime' => '0',
+					    'ExtUtils::PkgConfig' => '0'
 					   },
 			       recommends => {
 					      'X11::FullScreen' => '0',
