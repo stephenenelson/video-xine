@@ -8,3 +8,4 @@ lib/Video/Xine.c
 lib/Video/Xine.o
 META.json
 META.yml
+Video-Xine-*.tar.gz
