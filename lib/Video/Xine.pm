@@ -136,7 +136,7 @@ Video::Xine - Perl interface to libxine
   );
 
   # Load a video driver
-  my $video_driver = Video::Xine::Driver::Video->new($xine,"auto", XINE_VISUAL_TYPE_X11,$x11_visual);
+  my $video_driver = Video::Xine::Driver::Video->new($xine,"auto", XINE_VISUAL_TYPE_X11, $x11_visual);
 
   # Load an audio driver
   my $audio_driver = Video::Xine::Driver::Audio->new($xine, "auto");
