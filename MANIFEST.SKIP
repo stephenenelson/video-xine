@@ -14,3 +14,4 @@ tar
 make_rpm.sh
 lib/Video/Xine.c
 lib/Video/Xine.o
+.git
