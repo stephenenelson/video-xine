@@ -24,7 +24,7 @@ my $build = Module::Build->new(
 					    'Test::More' => '0.01',
 					    'ExtUtils::CBuilder' => '0',
 					    'DateTime' => '0',
-					    'ExtUtils::PkgConfig' => '0'
+					    'ExtUtils::PkgConfig' => '0',
 					    'X11::FullScreen' => '0',
 					   },
 			       recommends => {
