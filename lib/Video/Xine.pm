@@ -129,13 +129,16 @@ Video::Xine - Perl interface to libxine
   use Video::Xine::Stream;
   use Video::Xine::Driver::Audio;
   use Video::Xine::Driver::Video qw/:constants/;
+  use Video::Xine::Util qw/make_x11_fs_visual/;
 
   # Create and initialize the Xine object
   my $xine = Video::Xine->new(
     config_file => "$ENV{'HOME'}/.xine/config",
   );
-
-  # Load a video driver
+  
+  # Get an X11 visual for X11::FullScreen and load a video driver
+  my $display = X11::FullScreen::Display->new(':0.0');	
+  my $fs_visual = make_x11_fs_visual($display, $display->createWindow());
   my $video_driver = Video::Xine::Driver::Video->new($xine,"auto", XINE_VISUAL_TYPE_X11, $x11_visual);
 
   # Load an audio driver
@@ -164,16 +167,17 @@ Video::Xine - Perl interface to libxine
 
 =head1 DESCRIPTION
 
-A perl interface to Xine, the Linux movie player. More properly, an
+A perl interface to xine, the Linux movie player. More properly, an
 interface to libxine, the development library. Requires installation of
-libxine.
+libxine. It has been tested up to xine version 1.2.2.
 
-Video::Xine by itself does not provide a user interface or windowing system,
-and neither does this interface. Instead, you must set up the window
-using your own windowing code, and pass the window information to
-Video::Xine. The "X11::FullScreen" module provides a simple interface for
-doing this with X.
+Video::Xine by itself does not provide a user interface or windowing
+system. Instead, you must set up the window using your own windowing
+code, and pass the window information to Video::Xine. The
+"X11::FullScreen" module provides a simple interface for doing this with
+X.
 
+See the provided 'bin/xine_play' file for a very simple movie player that uses Video::Xine and X11::FullScreen to play movies.
 
 =head2 METHODS
 
@@ -225,7 +229,7 @@ See Video::Xine::Stream for stream methods.
 
 =head3 get_error()
 
-Returns the error code for the last error. Xine error codes are:
+Returns the error code for the last error. See the Xine documentation for their meaning. Xine error codes are:
 
 =over
 
@@ -255,9 +259,13 @@ XINE_ERROR_INPUT_FAILED
 
 =back
 
+=head1 PREREQUISITES
+
+This module lists X11::FullScreen as a requirement, since that's currently the only way of showing video with it. Technically, it's possible to use it with other windowing systems, or even to use it without X to find out metadata about AV files.
+
 =head1 SEE ALSO
 
-Xine (
+Xine (http://www.xine-project.org/home)
 
 =head1 AUTHOR
 
