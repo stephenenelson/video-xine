@@ -168,10 +168,10 @@ A perl interface to Xine, the Linux movie player. More properly, an
 interface to libxine, the development library. Requires installation of
 libxine.
 
-Xine by itself does not provide a user interface or windowing system,
+Video::Xine by itself does not provide a user interface or windowing system,
 and neither does this interface. Instead, you must set up the window
 using your own windowing code, and pass the window information to
-Xine. The "X11::FullScreen" module provides a simple interface for
+Video::Xine. The "X11::FullScreen" module provides a simple interface for
 doing this with X.
 
 
@@ -208,8 +208,8 @@ Xine engine parameter constants:
 
 XINE_ENGINE_PARAM_VERBOSITY
 
-Possible values are XINE_VERBOSITY_NONE (0), XINE_VERBOSITY_LOG (1),
-and XINE_VERBOSITY_DEBUG.
+Possible values are XINE_VERBOSITY_NONE, XINE_VERBOSITY_LOG,
+and XINE_VERBOSITY_DEBUG, which are exported by default.
 
 =back
 
@@ -257,11 +257,11 @@ XINE_ERROR_INPUT_FAILED
 
 =head1 SEE ALSO
 
-L<xine(1)>
+Xine (
 
 =head1 AUTHOR
 
-Stephen Nelson, E<lt>stephen@cpan.orgE<gt>
+Stephen Nelson <stephenenelson@mac.com>
 
 =head1 SPECIAL THANKS TO
 
