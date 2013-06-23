@@ -354,6 +354,8 @@ get_display(visual)
 	x11_visual_t *visual
 	CODE:
 		RETVAL = visual->display;
+	OUTPUT:
+		RETVAL
 
 
 MODULE = Video::Xine	PACKAGE = Video::Xine::Event
