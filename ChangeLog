@@ -1,3 +1,10 @@
+2013-06-23  Stephen Nelson  <stephenenelson@mac.com>
+
+	* Version 0.18
+	* Fixed a warning in XS build
+	* Added 
+	* Documentation fixes
+
 2008-01-27  Stephen Nelson  <stephenenelson@mac.com>
 
 	* Version 0.17
