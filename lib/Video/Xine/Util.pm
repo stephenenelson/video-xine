@@ -1,8 +1,20 @@
 package Video::Xine::Util;
 
+use Exporter 'import';
+our @EXPORT_OK = qw/make_x11_visual make_x11_fs_visual/;
+
 use Video::Xine;
 
-# Utility functions for Xine. Really just here for documentation.
+sub make_x11_fs_visual {
+	my ($display, $window) = @_;
+	
+	return Video::Xine::Util::make_x11_visual(
+		$display,
+        $display->getDefaultScreen(),
+        $window, $display->getWidth(), $display->getHeight(),
+        $display->getPixelAspect()	
+	);
+}
 
 1;
 
@@ -14,9 +26,9 @@ Video::Xine::Util -- Utility methods for Xine
 
 =head1 SYNOPSIS
 
-  use Video::Xine::Util;
+  use Video::Xine::Util qw/make_x11_visual make_x11_fs_visual/;
 
-  my $visual = Video::Xine::Util::make_x11_visual
+  my $visual = make_x11_visual
                 (
                   $x_display,
                   $screen,
@@ -26,11 +38,15 @@ Video::Xine::Util -- Utility methods for Xine
                   $aspect
                 );
 
+  # Get a visual from X11::FullScreen
+  my $display = X11::FullScreen::Display->new(':0.0');
+  
+  my $fs_visual = make_x11_fs_visual($display, $display->createWindow());
+
 
 =head1 DESCRIPTION
 
-The Utility package actually provides only one subroutine,
-make_x11_visual().
+The Util package provides helper subroutines for gluing Video::Xine to windowing systems.
 
 =head1 SUBROUTINES
 
