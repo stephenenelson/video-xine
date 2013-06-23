@@ -11,7 +11,7 @@ lib/Video/Xine/Event.pm
 lib/Video/Xine/Event/Queue.pm
 lib/Video/Xine/OSD.pm
 lib/Video/Xine/Stream.pm
-lib/Video/Xine/Utility.pm
+lib/Video/Xine/Util.pm
 MANIFEST
 README
 t/Event.t
@@ -23,3 +23,5 @@ t/time_015.avi
 t/Video-Xine.t
 t/X11.t
 typemap
+META.yml
+META.json
