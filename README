@@ -24,12 +24,7 @@ This module requires these other modules and libraries:
   Module::Build
   Test::More
   DateTime
-
-In addition, if you wish to actually display video, you probably want:
-
   X11::FullScreen
-
-which provides a workable, if extremely simple, windowing toolkit.
 
 COPYRIGHT AND LICENCE
 

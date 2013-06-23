@@ -25,9 +25,9 @@ my $build = Module::Build->new(
 					    'ExtUtils::CBuilder' => '0',
 					    'DateTime' => '0',
 					    'ExtUtils::PkgConfig' => '0'
+					    'X11::FullScreen' => '0',
 					   },
 			       recommends => {
-					      'X11::FullScreen' => '0',
 					      'perl' => '5.8.5',
 					      'DateTime::Format::Duration' => 0
 					     },
