@@ -158,14 +158,14 @@ xine_play(stream, ...)
 	int start_time;
 
     CODE:
-	if (items >= 2 && SvOK(ST(2)) ) {
-	   start_pos = SvIV(ST(2));
+	if (items >= 2 && SvOK(ST(1)) ) {
+	   start_pos = SvIV(ST(1));
 	}
         else {
            start_pos = 0;
         }
-        if (items >= 3 && SvOK(ST(3)) ) {
-           start_time = SvIV(ST(3));
+        if (items >= 3 && SvOK(ST(2)) ) {
+           start_time = SvIV(ST(2));
         }
         else {
            start_time = 0;
