@@ -1,7 +1,8 @@
-2013-06-24  Stephen Nelson  <stephenenelson@mac.com>
+2013-06-25  Stephen Nelson  <stephenenelson@mac.com>
 
 	* Version 0.20
 	* Fixed off-by-one error in ST macros. Patch from Matthew King <mking@monnsta.net> per rt.cpan.org 575606
+	* Put requirements into configure_requires, build_requires, test_requires, etc. as appropriate
 
 2013-06-23  Stephen Nelson  <stephenenelson@mac.com>
 
