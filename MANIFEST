@@ -1,3 +1,4 @@
+inc/Devel/CheckLib.pm
 bin/xine_length
 bin/xine_play
 Build.PL
