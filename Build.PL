@@ -12,7 +12,6 @@ use warnings;
 use Module::Build;
 use Config;
 use ExtUtils::PkgConfig;
-use ExtUtils::CheckLib;
 
 ### Based on Build.PL for Image::Imlib2
 if (! $Config{'usethreads'}) {
