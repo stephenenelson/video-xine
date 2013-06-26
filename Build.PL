@@ -19,12 +19,18 @@ my $build = Module::Build->new(
 			       extra_linker_flags => $xine_config{'libs'},
 			       license => 'perl',
 			       module_name => 'Video::Xine',
-			       requires => {
-					    'Module::Build' => '0',
-					    'Test::More' => '0.01',
-					    'ExtUtils::CBuilder' => '0',
-					    'DateTime' => '0',
+                   configure_requires => {
 					    'ExtUtils::PkgConfig' => '0',
+					    'Module::Build' => '0',
+                   },
+                   build_requires => {
+					    'ExtUtils::CBuilder' => '0',                   
+                   },
+                   test_requires => {
+					    'Test::More' => '0.01',                   
+                   },
+			       requires => {
+					    'DateTime' => '0',
 					    'X11::FullScreen' => '0',
 					   },
 			       recommends => {
