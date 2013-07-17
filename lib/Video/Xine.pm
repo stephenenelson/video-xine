@@ -69,6 +69,15 @@ sub get_version {
     return "$major.$minor.$sub";
 }
 
+sub check_version {
+	my $type = shift;
+	my ($major, $minor, $sub) = @_;
+	
+	my $rc = xine_check_version($major, $minor, $sub);
+	
+	return $rc;
+}
+
 sub new {
   my $type = shift;
   my (%in) = @_;
