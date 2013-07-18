@@ -1,7 +1,9 @@
 package Video::Xine::Stream;
 
-use Video::Xine;
+use strict;
+use warnings;
 
+use Video::Xine;
 use DateTime;
 
 use base 'Exporter';

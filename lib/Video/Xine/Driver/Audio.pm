@@ -1,5 +1,8 @@
 package Video::Xine::Driver::Audio;
 
+use strict;
+use warnings;
+
 use Video::Xine;
 
 sub new {

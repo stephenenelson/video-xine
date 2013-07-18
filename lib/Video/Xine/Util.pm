@@ -1,5 +1,8 @@
 package Video::Xine::Util;
 
+use strict;
+use warnings;
+
 use Exporter 'import';
 our @EXPORT_OK = qw/make_x11_visual make_x11_fs_visual/;
 
