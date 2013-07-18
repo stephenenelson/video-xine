@@ -41,9 +41,9 @@ my $build = Module::Build->new(
 			       requires => {
 					    'DateTime' => '0',
 					    'X11::FullScreen' => '0',
+					    'perl' => '5.8.3'
 					   },
 			       recommends => {
-					      'perl' => '5.8.5',
 					      'DateTime::Format::Duration' => 0
 					     },
 			      );
