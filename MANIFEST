@@ -1,4 +1,3 @@
-inc/Devel/CheckLib.pm
 bin/xine_length
 bin/xine_play
 Build.PL
@@ -15,15 +14,19 @@ lib/Video/Xine/OSD.pm
 lib/Video/Xine/Stream.pm
 lib/Video/Xine/Util.pm
 MANIFEST
+META.json
+META.yml
 README
 t/Event.t
+t/kwalitee.t
 t/osd.t
+t/pod.t
+t/pod_coverage.t
 t/stream.t
 t/test.ogg
 t/test_config
-t/video_xine_test.mp4
+t/time_015.avi
 t/Video-Xine.t
+t/video_xine_test.mp4
 t/X11.t
 typemap
-META.yml
-META.json

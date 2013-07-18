@@ -17,3 +17,5 @@ lib/Video/Xine.o
 .git
 .DS_Store
 
+^MYMETA\.yml$
+^MYMETA\.json$
