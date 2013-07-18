@@ -102,6 +102,9 @@ our @EXPORT_OK = qw/
   XINE_META_INFO_CDINDEX_DISCID
   XINE_META_INFO_TRACK_NUMBER
 
+  XINE_MASTER_SLAVE_PLAY
+  XINE_MASTER_SLAVE_STOP
+  XINE_MASTER_SLAVE_SPEED
 /;
 
 # xine_get_stream_info
@@ -268,6 +271,13 @@ our %EXPORT_TAGS = (
           XINE_SPEED_FAST_2
           XINE_SPEED_FAST_4
           /
+    ],
+    master_slave_constants => [
+    	qw/
+		  XINE_MASTER_SLAVE_PLAY
+		  XINE_MASTER_SLAVE_STOP
+		  XINE_MASTER_SLAVE_SPEED
+    	/
     ]
 );
 
@@ -320,6 +330,12 @@ use constant {
     XINE_SPEED_FAST_4 => 16,
 };
 
+use constant {
+	XINE_MASTER_SLAVE_PLAY  => (1<<0),
+	XINE_MASTER_SLAVE_STOP  => (1<<1),
+	XINE_MASTER_SLAVE_SPEED => (1<<2)
+};
+
 sub new {
     my $type = shift;
     my ( $xine, $audio_port, $video_port ) = @_;
@@ -336,6 +352,13 @@ sub new {
 
     return $self;
 
+}
+
+sub master_slave {
+	my $self = shift;
+	my ( $slave, $affinity ) = @_;
+	
+	return xine_stream_master_slave($self->{'stream'}, $slave, $affinity);
 }
 
 sub get_video_port {
@@ -486,6 +509,14 @@ are optional and default to automatically-selected drivers.
 =head3 get_video_port()
 
  Returns the video port, also known as the video driver.
+
+=head3 master_slave()
+
+  $stream->master_slave( $slave_stream, $affection )
+
+Sets up a master-slave relationship with $slave_stream. You can import the constants
+for C<$affection> with the ':master_slave_constants' tag. They are XINE_MASTER_SLAVE_PLAY,
+XINE_MASTER_SLAVE_STOP, and XINE_MASTER_SLAVE_SPEED.
 
 =head3 open()
 

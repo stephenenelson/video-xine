@@ -149,6 +149,15 @@ xine_stream_new(xine,ao,vo)
         RETVAL
 
 ##
+## Establish a master-slave relationship
+##
+int xine_stream_master_slave(self, slave, affection)
+	xine_stream_t *self
+	xine_stream_t *slave
+    int affection
+
+
+##
 ## Opens a xine mrl on an existing stream.
 ##
 int
