@@ -405,6 +405,15 @@ sub close {
     xine_close( $self->{'stream'} );
 }
 
+##
+## Eject, if possible
+##
+sub eject {
+	my $self = shift;
+	
+	return xine_eject( $self->{'stream'} );
+}
+
 sub get_pos_length {
     my $self = shift;
     my ( $pos_stream, $pos_time, $length_time ) = ( 0, 0, 0 );
@@ -542,6 +551,12 @@ Stops the stream.
  $stream->close()
 
 Close the stream. You can re-use the same stream again and again.
+
+=head3 eject()
+
+  $stream->eject()
+  
+Eject the stream, if possible. Returns 1 if OK, 0 if error.
 
 =head3 get_pos_length()
 

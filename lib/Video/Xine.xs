@@ -210,6 +210,13 @@ void
 xine_close(self)
 	xine_stream_t *self
 
+
+#
+# Eject
+#
+int  xine_eject (self) 
+	xine_stream_t *self
+
 #
 # Get the stream position and length
 #
