@@ -18,16 +18,16 @@ my $ao = Video::Xine::Driver::Audio->new($xine, 'none')
 # Get our stream
 my $stream = $xine->stream_new($ao);
 
-$stream->open("$Bin/time_015.avi");
+$stream->open("$Bin/video_xine_test.mp4");
 
 my $duration = $stream->get_duration();
 
-is($duration->seconds(), 14);
-is($duration->nanoseconds(), 981000);
+is($duration->seconds(), 10);
+is($duration->nanoseconds(), 10000);
 
 is($stream->get_info(XINE_STREAM_INFO_BITRATE), 0);
-is($stream->get_info(XINE_STREAM_INFO_FRAME_DURATION), 3003);
-is($stream->get_info(XINE_STREAM_INFO_VIDEO_WIDTH), 704);
+is($stream->get_info(XINE_STREAM_INFO_FRAME_DURATION), 0);
+is($stream->get_info(XINE_STREAM_INFO_VIDEO_WIDTH), 640);
 is($stream->get_info(XINE_STREAM_INFO_VIDEO_HEIGHT), 480);
 
 $stream->close();

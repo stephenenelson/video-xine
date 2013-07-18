@@ -40,8 +40,8 @@ SKIP: {
     or skip "Unable to load audio driver", 1;
   my $stream = $xine->stream_new($audio_driver, $driver);
   
-  $stream->open("$Bin/time_015.avi")
-    or die "Couldn't open '$Bin/time_015.avi'";
+  $stream->open("$Bin/video_xine_test.mp4")
+    or die "Couldn't open '$Bin/video_xine_test.mp4'";
   $stream->play( 0 , 10000);
   sleep(5);
 

@@ -21,7 +21,7 @@ t/osd.t
 t/stream.t
 t/test.ogg
 t/test_config
-t/time_015.avi
+t/video_xine_test.mp4
 t/Video-Xine.t
 t/X11.t
 typemap

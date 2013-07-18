@@ -23,8 +23,8 @@ SKIP: {
 
     my $queue = Video::Xine::Event::Queue->new($stream);
 
-    $stream->open("$Bin/time_015.avi")
-      or die "Couldn't open '$Bin/time_015.avi'";
+    $stream->open("$Bin/video_xine_test.mp4")
+      or die "Couldn't open '$Bin/video_xine_test.mp4'";
 
     $stream->play( 0, int( .7 * 65535 ) );
 

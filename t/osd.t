@@ -33,8 +33,8 @@ TEST: {
 
     ok(1);
 
-    $stream->open("$Bin/time_015.avi")
-      or die "Couldn't open '$Bin/time_015.avi'";
+    $stream->open("$Bin/video_xine_test.mp4")
+      or die "Couldn't open '$Bin/video_xine_test.mp4'";
 
     $stream->play();
 
