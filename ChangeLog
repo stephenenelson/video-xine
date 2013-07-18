@@ -1,3 +1,10 @@
+2013-07-17   Stephen Nelson  <stephenenelson@mac.com>
+
+    * Version 0.22
+    * Added check_version to Video::Xine
+    * Added master_slave and eject to Video::Xine::Stream
+    * General Kwalitee improvement attempts
+
 2013-06-25  Stephen Nelson  <stephenenelson@mac.com>
 
 	* Version 0.20
