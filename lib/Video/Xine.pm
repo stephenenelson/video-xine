@@ -206,6 +206,12 @@ method.
 Example:
 
  my $version = Video::Xine->get_version(); # returns something like '1.1.8'
+ 
+=head3 check_version()
+
+  Video::Xine->check_version(1, 2, 1) or die "Too low!\n";
+
+Checks the provided major, minor, and point release numbers against the current Xine version and makes sure they're compatible.
 
 =head3 set_param()
 
