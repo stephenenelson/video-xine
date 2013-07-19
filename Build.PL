@@ -43,6 +43,11 @@ my $build = Module::Build->new(
     recommends => {
         'DateTime::Format::Duration' => 0
     },
+    meta_merge => {
+    	resources => {
+    		repository => 'https://github.com/stephenenelson/video-xine'
+    	}
+    }
 );
 
 $build->create_build_script();
