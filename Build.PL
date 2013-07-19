@@ -34,6 +34,8 @@ my $build = Module::Build->new(
     },
     test_requires => {
         'Test::More' => '0.01',
+        'Test::Kwalitee' => 0,
+        'Test::Pod::Coverage' => 0
     },
     requires => {
         'DateTime'        => '0',
