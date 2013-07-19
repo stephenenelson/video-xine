@@ -23,7 +23,6 @@ t/osd.t
 t/stream.t
 t/test.ogg
 t/test_config
-t/time_015.avi
 t/Video-Xine.t
 t/video_xine_test.mp4
 t/X11.t
