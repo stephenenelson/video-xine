@@ -20,8 +20,6 @@ README
 t/Event.t
 t/kwalitee.t
 t/osd.t
-t/pod.t
-t/pod_coverage.t
 t/stream.t
 t/test.ogg
 t/test_config
@@ -30,3 +28,5 @@ t/Video-Xine.t
 t/video_xine_test.mp4
 t/X11.t
 typemap
+xt/pod.t
+xt/pod_coverage.t
