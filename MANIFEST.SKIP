@@ -16,6 +16,6 @@ lib/Video/Xine.c
 lib/Video/Xine.o
 .git
 .DS_Store
-
+Debian_CPANTS.txt$
 ^MYMETA\.yml$
 ^MYMETA\.json$
