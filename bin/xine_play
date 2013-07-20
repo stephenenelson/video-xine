@@ -210,7 +210,7 @@ xine_play [options] [mrl ...]
     --no-audio          Turn off audio play
     --no-video          Turn off video play
     --verbosity         Set verbosity level (0-2)
-    --broadcaster-port  Set the RTP broadcast port
+    --broadcaster-port  Set the master port
     --event-wait        Use event-wait (not event-get) to get events
     --frame-report      Print out discarded and skipped frames after each event
 
@@ -243,7 +243,7 @@ output), or 2 (debug output).
 =item B<--broadcaster-port>
 
 If set, Xine will attempt to open a port on which each stream will be
-broadcast.
+broadcast. Use 'xine slave://address:port' in another instance to display this data.
 
 =item B<--event-wait>
 
