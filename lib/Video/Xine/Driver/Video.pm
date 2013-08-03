@@ -3,6 +3,8 @@ package Video::Xine::Driver::Video;
 use strict;
 use warnings;
 
+use Carp;
+
 use Video::Xine;
 use base 'Exporter';
 
@@ -76,7 +78,7 @@ sub new {
 
         $self->{'driver'} =
           xine_open_video_driver( $self->{'xine'}{'xine'}, $id, $visual, $data )
-          or return;
+          or die "Unable to load video driver";
     }
     elsif ( defined($id) ) {
         $self->{'driver'} =
@@ -96,6 +98,8 @@ sub new {
 sub send_gui_data {
     my $self = shift;
     my ( $type, $data ) = @_;
+    
+    defined $data or confess "\$data must be defined";
 
     xine_port_send_gui_data( $self->{'driver'}, $type, $data );
 }
