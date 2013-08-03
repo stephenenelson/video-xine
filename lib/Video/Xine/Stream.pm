@@ -560,12 +560,12 @@ Eject the stream, if possible. Returns 1 if OK, 0 if error.
 
 =head3 get_pos_length()
 
-  ($pos_pct, $pos_time, $length_time) = $s->get_pos_length();
+  ($pos_pct, $pos_time, $length_millis) = $stream->get_pos_length();
 
 Gets position / length information. C<$pos_pct> is a value between 1
 and 65535 indicating how far we've proceeded through the
 stream. C<$pos_time> gives how far we've proceeded through the stream
-in milliseconds, and C<$length_time> gives the total length of the
+in milliseconds, and C<$length_millis> gives the total length of the
 stream in milliseconds.
 
 =head3 get_status()
@@ -626,6 +626,11 @@ Returns information about the stream, such as its bit rate, audio
 channels, width, or height. C<$info_const> should be a xine info constant.
 
 =head3 get_meta_info()
+
+  my $meta_info = $stream->get_meta_info($meta_info_const)
+
+Returns meta-information about the stream, such as its title.
+C<$meta_info_const> should be a xine meta info constant; see META CONSTANTS below for details.
 
 =head2 PARAM CONSTANTS
 
@@ -909,7 +914,7 @@ XINE_STREAM_INFO_DVD_ANGLE_COUNT
 
 =head2 META CONSTANTS
 
-Exported in meta_constants.
+Exported with the C<:meta_constants> tag.
 
 =over
 

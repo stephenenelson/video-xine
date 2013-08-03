@@ -154,7 +154,7 @@ Video::Xine - Perl interface to libxine
   my $audio_driver = Video::Xine::Driver::Audio->new($xine, "auto");
 
   # Create a new stream
-  my $stream = $xine->stream_new($AUDIO_DRIVER,$VIDEO_DRIVER);
+  my $stream = $xine->stream_new($audio_driver, $video_driver);
 
   # Open a file on the stream
   $stream->open('file://my/movie/file.avi')
@@ -192,7 +192,7 @@ See the provided 'bin/xine_play' file for a very simple movie player that uses V
 
 =head3 new()
 
-Constructor. Takes named argument 'config_file'.
+Constructor. Takes optional named argument 'config_file'.
 
 Example:
 
