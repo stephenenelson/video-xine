@@ -5,6 +5,7 @@ use warnings;
 
 use Video::Xine;
 use DateTime;
+use Carp;
 
 use base 'Exporter';
 
@@ -339,14 +340,30 @@ use constant {
 sub new {
     my $type = shift;
     my ( $xine, $audio_port, $video_port ) = @_;
+    
+    my $xine_ptr;
+    
+    if ( ref $xine eq 'Video::Xine' ) {
+    	$xine_ptr = $xine->{'xine'};
+    }
+    else {
+    	$xine_ptr = $xine;
+    }
 
     my $self = {};
-    $self->{'xine'}       = $xine;
-    $self->{'audio_port'} = $audio_port;
-    $self->{'video_port'} = $video_port;
-    $self->{'stream'} =
+    $self->{'xine'}       = $xine_ptr;
+    $self->{'audio_port'} = $audio_port or croak "Audio port required";
+    $self->{'video_port'} = $video_port or croak "Video port required";
+
+	my $stream =
       xine_stream_new( $xine, $audio_port->{'driver'},
         $video_port->{'driver'} );
+    
+    if (! defined $stream) {
+    	croak "Xine stream error: " . xine_get_error($xine);
+    }
+    
+    $self->{'stream'} = $stream;
 
     bless $self, $type;
 
