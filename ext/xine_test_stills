@@ -1,0 +1,17 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+
+use X11::FullScreen;
+use Video::Xine;
+
+my $still = "$ENV{'HOME'}/Pictures/still_1.png";
+my $display = ':0';
+
+MAIN: {
+	my $display = X11::FullScreen::Display->new($display);
+	my $window = $display->createWindow();
+	$display->displayStill($window, $still);
+	sleep(10);
+}
