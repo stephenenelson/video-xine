@@ -93,14 +93,14 @@ sub make_x11_vo {
 
     my $display_str = defined $ENV{'DISPLAY'} ? $ENV{'DISPLAY'} : ':0.0';
 
-    my $display = X11::FullScreen::Display->new($display_str)
+    my $display = X11::FullScreen->new($display_str)
       or do {
-        warn( "X11::FullScreen::Display does not initialize", 1 );
+        warn( "X11::FullScreen does not initialize", 1 );
         return;
       };
 
 
-    my $window = $display->createWindow();
+    my $window = $display->show();
     $display->sync();
     my $x11_visual =
       Video::Xine::Util::make_x11_visual( $display,

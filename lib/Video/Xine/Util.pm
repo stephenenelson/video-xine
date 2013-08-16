@@ -9,13 +9,15 @@ our @EXPORT_OK = qw/make_x11_visual make_x11_fs_visual/;
 use Video::Xine;
 
 sub make_x11_fs_visual {
-	my ($display, $window) = @_;
+	my ($fullscreen) = @_;
 	
 	return Video::Xine::Util::make_x11_visual(
-		$display,
-        $display->getDefaultScreen(),
-        $window, $display->getWidth(), $display->getHeight(),
-        $display->getPixelAspect()	
+		$fullscreen->display(),
+        $fullscreen->screen(),
+        $fullscreen->window(), 
+        $fullscreen->display_width(),
+        $fullscreen->display_height(),
+        $fullscreen->pixel_aspect()	
 	);
 }
 
@@ -42,7 +44,7 @@ Video::Xine::Util -- Utility methods for Xine
                 );
 
   # Get a visual from X11::FullScreen
-  my $display = X11::FullScreen::Display->new(':0.0');
+  my $display = X11::FullScreen->new(':0');
   
   my $fs_visual = make_x11_fs_visual($display, $display->createWindow());
 

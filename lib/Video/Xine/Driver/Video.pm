@@ -146,7 +146,7 @@ to fall out of scope so long as the driver is alive.
 
 Example:
 
-  my $display = X11::FullScreen::Display->new($display_str);
+  my $display = X11::FullScreen->new($display_str);
 
   my $x11_visual = Video::Xine::Util::make_x11_visual
      ($display,

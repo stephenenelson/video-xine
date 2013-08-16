@@ -6,6 +6,7 @@ use Test::More tests => 1;
 
 use Video::Xine;
 use Video::Xine::Driver::Video ':constants';
+use Video::Xine::Util 'make_x11_fs_visual';
 if ($@) { skip_all(); }
 
 my $xine = Video::Xine->new(config_file => "$Bin/test_config");
@@ -16,24 +17,17 @@ SKIP: {
 
   skip("X11::FullScreen module required for X11 tests", 1) if $@;
 
-  if (! $ENV{'VIDEO_XINE_SHOW'}) {
-    skip("Skipping X11 tests. Set VIDEO_XINE_SHOW to enable.", 1);
+  if (! $ENV{'DISPLAY'}) {
+    skip("Skipping X11 tests. Set DISPLAY to enable.", 1);
   }
 
-  my $display_str = defined $ENV{'DISPLAY'} ? $ENV{'DISPLAY'} : ':0.0';
+  my $display_str = $ENV{'DISPLAY'};
 
-  my $display = X11::FullScreen::Display->new($display_str)
-    or skip("X11::FullScreen::Display does not initialize", 1);
-
-  my $window = $display->createWindow();
+  my $display = X11::FullScreen->new($display_str);
+  
+  $display->show();
   $display->sync();
-  my $x11_visual = Video::Xine::Util::make_x11_visual($display,
-						      $display->getDefaultScreen(),
-						      $window,
-						      $display->getWidth(),
-						      $display->getHeight(),
-						      $display->getPixelAspect()
-						     );
+  my $x11_visual = make_x11_fs_visual($display);
   my $driver = Video::Xine::Driver::Video->new($xine,"auto", XINE_VISUAL_TYPE_X11, $x11_visual)
     or skip("Couldn't load video driver", 1);
   my $audio_driver = Video::Xine::Driver::Audio->new($xine, 'none')

@@ -153,16 +153,16 @@ sub make_x11_driver {
 
     my $display_str = defined $ENV{'DISPLAY'} ? $ENV{'DISPLAY'} : ':0.0';
 
-    my $display = X11::FullScreen::Display->new($display_str)
+    my $display = X11::FullScreen->new($display_str)
       or do {
-        warn("X11::FullScreen::Display does not initialize");
+        warn("X11::FullScreen did not initialize");
         return;
       };
 
-    my $window = $display->createWindow();
+    my $window = $display->show();
     $display->sync();
     my $x11_visual =
-      Video::Xine::Util::make_x11_fs_visual( $display, $window );
+      Video::Xine::Util::make_x11_fs_visual( $display );
 
     my $driver =
       Video::Xine::Driver::Video->new( $xine, "auto", XINE_VISUAL_TYPE_X11,
