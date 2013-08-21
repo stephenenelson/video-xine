@@ -39,7 +39,7 @@ my $build = Module::Build->new(
     },
     requires => {
         'DateTime'        => '0',
-        'X11::FullScreen' => '0',
+        'X11::FullScreen' => '0.992',
         'perl'            => '5.8.3'
     },
     recommends => {
