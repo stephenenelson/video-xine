@@ -39,11 +39,9 @@ my $build = Module::Build->new(
     },
     requires => {
         'DateTime'        => '0',
+        'DateTime::Format::Duration' => 0,
         'X11::FullScreen' => '0.992',
         'perl'            => '5.8.3'
-    },
-    recommends => {
-        'DateTime::Format::Duration' => 0
     },
     meta_merge => {
     	resources => {
