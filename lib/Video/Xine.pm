@@ -130,7 +130,7 @@ __END__
 
 =head1 NAME
 
-Video::Xine - Perl interface to libxine
+Video::Xine - xine movie player interface
 
 =head1 SYNOPSIS
 
