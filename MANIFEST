@@ -2,6 +2,7 @@ bin/xine_length
 bin/xine_play
 Build.PL
 ChangeLog
+ext/xine_test_stills
 inc/Devel/CheckLib.pm
 lib/Video/ppport.h
 lib/Video/Xine.pm
