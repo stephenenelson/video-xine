@@ -1,5 +1,8 @@
-8/21/13 9:13 AM Stephen Nelson  <stephenenelson@mac.com>
-	* Version 0.23
+0.24 2013-08-22 Stephen Nelson <stephenenelson@mac.com>
+	* Moved to Dist::Zilla
+	* Reformatted the ChangeLog
+
+0.23 2013-08-21 Stephen Nelson <stephenenelson@mac.com>
 	* Removed "time_015"
 	* Added prereqs for kwalitee tests (ironically, added to improve kwalitee, now adding prereqs to improve kwalitee)
 	* Documentation fixes
@@ -7,34 +10,24 @@
 	* Improved error messages for Stream, and allowed object creation
 	* Updated interface to X11::FullScreen
 
-2013-07-17   Stephen Nelson  <stephenenelson@mac.com>
-
-    * Version 0.22
+0.22 2013-07-17   Stephen Nelson  <stephenenelson@mac.com>
     * Added check_version to Video::Xine
     * Added master_slave and eject to Video::Xine::Stream
     * General Kwalitee improvement attempts
 
-2013-06-25  Stephen Nelson  <stephenenelson@mac.com>
-
-	* Version 0.20
+0.20 2013-06-25  Stephen Nelson  <stephenenelson@mac.com>
 	* Fixed off-by-one error in ST macros. Patch from Matthew King <mking@monnsta.net> per rt.cpan.org 575606
 	* Put requirements into configure_requires, build_requires, test_requires, etc. as appropriate
 
-2013-06-23  Stephen Nelson  <stephenenelson@mac.com>
-
-	* Version 0.19
+0.19 2013-06-23  Stephen Nelson  <stephenenelson@mac.com>
 	* Fixed a warning in XS build
 	* Added make_x11_fs_visual utility method
 	* Documentation fixes
 
-2008-01-27  Stephen Nelson  <stephenenelson@mac.com>
-
-	* Version 0.17
+0.17 2008-01-27  Stephen Nelson  <stephenenelson@mac.com>
 	* Fixed miswritten skip on test
 
-2008-01-27  Stephen Nelson  <stephenenelson@mac.com>
-
-	* Version 0.16
+0.16 2008-01-27  Stephen Nelson  <stephenenelson@mac.com>
 	* Fixed failing test in osd.t
 	* Added some tags to test.ogg to test get_meta_info
 	* Added get_meta_info to stream
@@ -43,9 +36,7 @@
 	* Added get_duration(), which requires DateTime::Duration
 	* Added duration formatting to xine_length
 
-2008-01-26  Stephen Nelson  <stephenenelson@mac.com>
-
-	* Version 0.15
+0.15 2008-01-26  Stephen Nelson  <stephenenelson@mac.com>
 	* Removed redundant XSLoader calls which caused a bunch of "redefined" warnings.
 	* Updated xine_play and made it use wait_event
 	* Added wait_event and get_info to stream
@@ -56,39 +47,33 @@
 	* Added (but as yet didn't document) info constants for stream
 	* Added xine_length script as a quick way of getting length of an MRL
 
-2008-01-20  Stephen Nelson  <stephenenelson@mac.com>
-	* Bumped version to 0.14
+0.14 2008-01-20  Stephen Nelson  <stephenenelson@mac.com>
 	* Split out Perl modules into separate pm files
 	* WARNING: INTERFACE CHANGE -- No longer exporting constants by default
 	* Eliminated segfault on closing tests
 
-2008-01-20  Stephen Nelson  <stephenenelson@mac.com>
-
-	* Bumped version to 0.13
-	* (Lost changelog for 0.12!)
+0.13 2008-01-20  Stephen Nelson  <stephenenelson@mac.com>
 	* Added OSD
 
-2008-01-08  Stephen Nelson  <stephenenelson@mac.com>
-
-	* Bumped version to 0.11
+0.11 2008-01-08  Stephen Nelson  <stephenenelson@mac.com>
 	* Added test for Xine version
 	* Added get_version()
 	* Fixed pass-through for audio driver in constructor
 	* Documentation updates
 	* Added xine_play
 
-2007-12-30  Stephen Nelson  <stephenenelson@mac.com> (0.10)
+0.10 2007-12-30  Stephen Nelson  <stephenenelson@mac.com>
 	* (Remote debugging via CPANTESTS is fun!)
 	* Removed Makefile.PL from the distribution (for real this time)
 	* Documented driver classes
 	* Added constants for visual types
 	
 
-2007-12-30  Stephen Nelson  <stephenenelson@mac.com> (0.09)
+0.09 2007-12-30  Stephen Nelson  <stephenenelson@mac.com>
 	* Fixed final (hopefully!) stream opening in test to use null audio
 	* Took out compatibility Makefile.PL, since it's messing up bailouts
 
-2007-12-30  Stephen Nelson  <stephenenelson@mac.com> (0.08)
+0.08 2007-12-30  Stephen Nelson  <stephenenelson@mac.com>
 	* In tests, we now skip tests if we can't create the appropriate
 	audio driver
 	* Changed Joern Reder thank-you to avoid confusion, since we
@@ -96,8 +81,7 @@
 	* Turned on 'warnings' in Video-Xine.t
 	* Eliminated attempt to load X11::FullScreen when not going to be used
 
-2007-12-28  Stephen Nelson  <stephenenelson@mac.com> (0.07)
-
+0.07 2007-12-28  Stephen Nelson  <stephenenelson@mac.com>
 	* In tests, we now use null drivers or skip unless the environment
 	variable VIDEO_XINE_SHOW is set.
 	* Documented Video::Xine and Video::Xine::Stream
@@ -105,23 +89,19 @@
 	* Sped up Event test
 	* Changed test audio from "drunk as an owl" to short voice recording
 
-2007-12-26  Stephen Nelson  <stephenenelson@mac.com> (0.06)
-
+0.06 2007-12-26  Stephen Nelson  <stephenenelson@mac.com>
 	* Fixed installation issue
 
-2007-12-26  Stephen Nelson  <stephenenelson@mac.com> (0.05)
-
+0.05 2007-12-26 Stephen Nelson  <stephenenelson@mac.com>
 	* Moved 'Changes' to 'ChangeLog'
 	* Made Makefile.PL check for xine lib and get library configuration from xine-config.
 	* Got rid of spurious META.yml in directory.
 
-Revision history for Perl extension Video::Xine.
-
-0.04  Wed Dec 26 02:36:21 PST 2007
+0.04 2007-12-26 Stephen Nelson  <stephenenelson@mac.com>
 	* Skip tests without X11. 
 	* Default to display :0.0 for tests.
 
-0.01  Tue Mar 15 07:24:37 2005
+0.01  2005-03-15 Stephen Nelson  <stephenenelson@mac.com>
 	- original version; created by h2xs 1.23 with options
 		-A -n Video::Xine /usr/include/xine.h -L/usr/lib -lxine -lz -lnsl -lpthread -lrt
 
