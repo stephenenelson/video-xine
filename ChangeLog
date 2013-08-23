@@ -1,3 +1,6 @@
+0.25 2013-08-22 Stephen Nelson <stephenenelson@mac.com>
+	* Fixed an installation bug
+
 0.24 2013-08-22 Stephen Nelson <stephenenelson@mac.com>
 	* Moved to Dist::Zilla
 	* Reformatted the ChangeLog
