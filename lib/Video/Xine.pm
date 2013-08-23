@@ -35,7 +35,7 @@ our @EXPORT = qw(
 );
 
 require XSLoader;
-XSLoader::load('Video::Xine', $VERSION);
+XSLoader::load('Video::Xine', $Video::Xine::VERSION);
 
 # Preloaded methods go here.
 
