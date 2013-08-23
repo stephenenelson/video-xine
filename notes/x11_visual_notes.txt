@@ -1,3 +1,0 @@
-Want to have default cb which takes static size. Store in user_data. Do it.
-
-
