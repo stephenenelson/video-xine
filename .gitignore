@@ -10,3 +10,5 @@ META.json
 META.yml
 Video-Xine-*.tar.gz
 Debian_CPANTS.txt
+.DS_Store
+
