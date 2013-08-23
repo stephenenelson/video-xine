@@ -14,8 +14,6 @@ use Video::Xine::Event;
 use Video::Xine::Event::Queue;
 use Video::Xine::OSD;
 
-our $VERSION = '0.23';
-
 our @ISA = qw(Exporter);
 our @EXPORT = qw(
   XINE_ERROR_NONE
